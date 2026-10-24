@@ -135,9 +135,9 @@ public class WindowsRenderingTests
     public void The_log_line_says_what_was_asked()
     {
         Assert.StartsWith("Rendering: ", WindowsRendering.Describe(null));
-        Assert.EndsWith("(FILEE_RENDERING not set)", WindowsRendering.Describe(null));
-        Assert.EndsWith("(FILEE_RENDERING=software)", WindowsRendering.Describe(" Software"));
-        Assert.EndsWith("(FILEE_RENDERING=opengl is unknown and ignored)", WindowsRendering.Describe("opengl"));
+        Assert.EndsWith("(TULEZ_RENDERING not set)", WindowsRendering.Describe(null));
+        Assert.EndsWith("(TULEZ_RENDERING=software)", WindowsRendering.Describe(" Software"));
+        Assert.EndsWith("(TULEZ_RENDERING=opengl is unknown and ignored)", WindowsRendering.Describe("opengl"));
     }
 }
 

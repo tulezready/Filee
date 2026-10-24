@@ -5,7 +5,7 @@ namespace Filee.Platform.Tests;
 /// <summary>Shortcuts (.lnk) dropped on Filee convert the file they point to (#159).</summary>
 public sealed class WindowsShortcutTests : IDisposable
 {
-    private readonly string _folder = Directory.CreateTempSubdirectory("filee-lnk-").FullName;
+    private readonly string _folder = Directory.CreateTempSubdirectory("tulez-lnk-").FullName;
 
     public void Dispose()
     {

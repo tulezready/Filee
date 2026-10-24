@@ -123,7 +123,7 @@ internal static partial class RhwpInput
         }
         catch (Exception ex) when (ex is InvalidDataException or System.Xml.XmlException)
         {
-            return null; // not a package Filee can read: rhwp reports the problem itself
+            return null; // not a package Tulez can read: rhwp reports the problem itself
         }
     }
 

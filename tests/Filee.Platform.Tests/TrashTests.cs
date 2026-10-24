@@ -12,7 +12,7 @@ namespace Filee.Platform.Tests;
 
 public sealed class TrashTests : IDisposable
 {
-    private readonly string _root = Path.Combine(Path.GetTempPath(), "filee-trash-" + Guid.NewGuid().ToString("N"));
+    private readonly string _root = Path.Combine(Path.GetTempPath(), "tulez-trash-" + Guid.NewGuid().ToString("N"));
 
     public TrashTests() => Directory.CreateDirectory(_root);
 
@@ -64,7 +64,7 @@ public sealed class TrashTests : IDisposable
         }
 
         // On the real drive it goes to the Recycle Bin.
-        var recycled = Path.Combine(_root, $"filee-test-recycle-{Guid.NewGuid():N}.txt");
+        var recycled = Path.Combine(_root, $"tulez-test-recycle-{Guid.NewGuid():N}.txt");
         File.WriteAllText(recycled, "x");
         Assert.Null(new WindowsPlatformServices().MoveToTrash(recycled));
         Assert.False(File.Exists(recycled));

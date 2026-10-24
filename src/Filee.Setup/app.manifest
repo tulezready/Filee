@@ -4,7 +4,7 @@
 
   <!--
     asInvoker: Setup asks for administrator rights itself (Program.RelaunchElevated) and keeps running unelevated
-    meanwhile, so it can start Filee as the signed-in user at the end (Filee must not run elevated: Windows blocks
+    meanwhile, so it can start Tulez as the signed-in user at the end (Tulez must not run elevated: Windows blocks
     drag and drop from Explorer into elevated windows). /CURRENTUSER, /PORTABLE=1 and /SANDBOX= need no rights.
   -->
   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">

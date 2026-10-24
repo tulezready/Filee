@@ -13,8 +13,8 @@ namespace Filee.Platform.Windows;
 public sealed class WindowsPlatformServices : IPlatformServices
 {
     private const string RunKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
-    private const string ContextMenuKey = @"Software\Classes\*\shell\Filee";
-    private const string AppName = "Filee";
+    private const string ContextMenuKey = @"Software\Classes\*\shell\Tulez";
+    private const string AppName = "Tulez";
 
     /// <summary>Window classes that belong to Explorer windows and the desktop.</summary>
     private static readonly HashSet<string> FileManagerClasses = new(StringComparer.Ordinal)
@@ -379,7 +379,7 @@ public sealed class WindowsPlatformServices : IPlatformServices
     }
 
     private static string SendToShortcutPath =>
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SendTo), "Filee.lnk");
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SendTo), "Tulez.lnk");
 
     private static nint RootWindowAt(int x, int y)
     {

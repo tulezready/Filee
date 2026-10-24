@@ -159,7 +159,7 @@ public class UiZoomTests
     public void The_size_is_written_once_after_a_moment_without_applying_the_other_settings()
     {
         TestServices.EnsureInitialized("en");
-        var directory = Directory.CreateTempSubdirectory("filee-zoom-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-zoom-").FullName;
         var window = Tracked();
         try
         {
@@ -180,7 +180,7 @@ public class UiZoomTests
             Assert.Empty(writes);
             Assert.True(UiZoom.SavePending);
 
-            UiZoom.Flush(); // as when the moment has passed, or Filee exits
+            UiZoom.Flush(); // as when the moment has passed, or Tulez exits
             Assert.Equal(1.3, Assert.Single(writes), 6);
             Assert.False(UiZoom.SavePending);
             Assert.Equal(0, changed);
@@ -203,7 +203,7 @@ public class UiZoomTests
     [Fact]
     public void Settings_from_before_the_zoom_read_as_100_percent()
     {
-        var directory = Directory.CreateTempSubdirectory("filee-zoom-old-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-zoom-old-").FullName;
         try
         {
             File.WriteAllText(Path.Combine(directory, "settings.json"), "{\"SchemaVersion\": 38}");
@@ -285,7 +285,7 @@ public class UiZoomTests
     public void Theme_page_shows_the_window_size_and_resets_it()
     {
         TestServices.EnsureInitialized("en");
-        var directory = Directory.CreateTempSubdirectory("filee-zoom-theme-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-zoom-theme-").FullName;
         var store = new UserDataStore(directory);
         store.Load();
         UiZoom.Configure(1, save: null);

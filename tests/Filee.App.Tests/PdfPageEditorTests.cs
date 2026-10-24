@@ -40,7 +40,7 @@ public class PdfPageEditorTests
     public async Task Editor_adds_reorders_rotates_deletes_and_saves_pages()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-pdf-pages-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-pdf-pages-").FullName;
         try
         {
             var first = MakePdf(folder, "source.pdf", (200, 0), (300, 0));
@@ -82,7 +82,7 @@ public class PdfPageEditorTests
     public async Task Editor_window_renders_previews_and_all_actions_without_clipping()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-pdf-pages-ui-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-pdf-pages-ui-").FullName;
         try
         {
             var source = MakePdf(folder, "Annual report.pdf", (595, 0), (595, 0), (842, 0), (595, 0));

@@ -67,14 +67,14 @@ public sealed partial class UpdateService : ObservableObject
         _log = log;
         // Downloads use their own stall timeout (StallTimeout); this one covers the API call and the response headers.
         _http = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(20) };
-        _http.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Filee", CurrentVersion));
+        _http.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Tulez", CurrentVersion));
         _http.DefaultRequestHeaders.Accept.ParseAdd("application/vnd.github+json");
     }
 
     /// <summary>GitHub repository from Directory.Build.props (FileeRepositoryUrl).</summary>
     public static string RepositoryUrl =>
         typeof(UpdateService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
-            .FirstOrDefault(a => a.Key == "RepositoryUrl")?.Value ?? "https://github.com/KnifeLemon/Filee";
+            .FirstOrDefault(a => a.Key == "RepositoryUrl")?.Value ?? "https://github.com/tulezready/Filee";
 
     public static string CurrentVersion =>
         typeof(UpdateService).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion.Split('+')[0]
@@ -87,11 +87,11 @@ public sealed partial class UpdateService : ObservableObject
     public static string LatestReleaseUrl => RepositoryUrl.TrimEnd('/') + "/releases/latest";
 
     /// <summary>The website: one big download button, friendlier than the GitHub release page.</summary>
-    public const string WebsiteUrl = "https://filee.sh/";
+    public const string WebsiteUrl = "https://github.com/tulezready/Filee";
 
     /// <summary>
     /// True when this copy was installed by Setup on Windows (uninstall.exe; the Inno Setup installer of 1.x put unins000.exe there)
-    /// or by install.sh on Linux (.filee-package marker containing com.filee.app).
+    /// or by install.sh on Linux (.filee-package marker containing io.github.tulezready.tulez).
     /// Only then can the new installer update it in place; the portable zip and a copy run from source have no uninstaller.
     /// </summary>
     public static bool IsInstalled { get; } =
@@ -103,10 +103,10 @@ public sealed partial class UpdateService : ObservableObject
 
     internal static bool IsLinuxInstalled(string baseDirectory)
     {
-        var marker = Path.Combine(baseDirectory, ".filee-package");
+        var marker = Path.Combine(baseDirectory, ".tulez-package");
         try
         {
-            return File.Exists(marker) && File.ReadAllText(marker).Trim() == "com.filee.app";
+            return File.Exists(marker) && File.ReadAllText(marker).Trim() == "io.github.tulezready.tulez";
         }
         catch (Exception)
         {
@@ -345,7 +345,7 @@ public sealed partial class UpdateService : ObservableObject
 
         if (TargetPlatform == "win")
         {
-            var folder = Path.Combine(Path.GetTempPath(), "Filee-update");
+            var folder = Path.Combine(Path.GetTempPath(), "Tulez-update");
             string installer;
             try
             {
@@ -424,11 +424,11 @@ public sealed partial class UpdateService : ObservableObject
 
             var scriptPath = Path.Combine(payloadDir, "install.sh");
             var targetInstallDir = LinuxInstallDirectoryOverride ?? GetLinuxInstallDirectory();
-            var newExe = Path.Combine(targetInstallDir, "Filee");
+            var newExe = Path.Combine(targetInstallDir, "Tulez");
             var currentPid = Environment.ProcessId;
             var logDir = Path.Combine(UserDataStore.DefaultDirectory, "logs");
             Directory.CreateDirectory(logDir);
-            var logFile = Path.Combine(logDir, $"filee-{DateTime.Now:yyyyMMdd}.log");
+            var logFile = Path.Combine(logDir, $"tulez-{DateTime.Now:yyyyMMdd}.log");
             var markerFile = FailureMarkerPathOverride ?? Path.Combine(UserDataStore.DefaultDirectory, ".update-failed");
 
             Process? helper;
@@ -442,7 +442,7 @@ public sealed partial class UpdateService : ObservableObject
                 startInfo.ArgumentList.Add("-c");
                 startInfo.ArgumentList.Add(
                     "for _ in $(seq 1 600); do if ! kill -0 \"$1\" 2>/dev/null; then break; fi; sleep 0.1; done; " +
-                    "if kill -0 \"$1\" 2>/dev/null; then echo \"Update aborted: Filee (PID $1) did not exit within timeout\" >> \"$4\"; rm -rf \"$5\" 2>/dev/null; exit 1; fi; " +
+                    "if kill -0 \"$1\" 2>/dev/null; then echo \"Update aborted: Tulez (PID $1) did not exit within timeout\" >> \"$4\"; rm -rf \"$5\" 2>/dev/null; exit 1; fi; " +
                     "\"$2\" --upgrade >> \"$4\" 2>&1; " +
                     "status=$?; " +
                     "rm -rf \"$5\" 2>/dev/null; " +
@@ -451,7 +451,7 @@ public sealed partial class UpdateService : ObservableObject
                     "else " +
                     "echo \"Update failed with status $status\" >> \"$4\"; " +
                     "echo \"$4\" > \"$6.tmp\" 2>/dev/null && mv -f \"$6.tmp\" \"$6\" 2>/dev/null || true; " +
-                    "if [ -x \"$3\" ]; then exec \"$3\" --background; else echo \"Cannot restart Filee: '$3' is not executable after rollback\" >> \"$4\"; exit $status; fi; " +
+                    "if [ -x \"$3\" ]; then exec \"$3\" --background; else echo \"Cannot restart Tulez: '$3' is not executable after rollback\" >> \"$4\"; exit $status; fi; " +
                     "fi"
                 );
                 startInfo.ArgumentList.Add("_");
@@ -530,7 +530,7 @@ public sealed partial class UpdateService : ObservableObject
         var publisher = OwnProgram is null ? null : SignerOf(OwnProgram, false);
         if (publisher is null)
         {
-            _log.LogInformation("This copy of Filee is not signed: the installer is checked by its SHA-256 only");
+            _log.LogInformation("This copy of Tulez is not signed: the installer is checked by its SHA-256 only");
             return;
         }
         var signer = SignerOf(installer, true);
@@ -888,22 +888,22 @@ public sealed partial class UpdateService : ObservableObject
             }
             else
             {
-                throw new InvalidDataException("Archive does not contain a single valid Filee payload with install.sh");
+                throw new InvalidDataException("Archive does not contain a single valid Tulez payload with install.sh");
             }
         }
 
         var installSh = Path.Combine(payloadDir, "install.sh");
-        var fileeExe = Path.Combine(payloadDir, "Filee");
+        var fileeExe = Path.Combine(payloadDir, "Tulez");
         if (!File.Exists(installSh) || !File.Exists(fileeExe))
         {
-            throw new InvalidDataException("Archive is missing install.sh or Filee executable in the payload directory.");
+            throw new InvalidDataException("Archive is missing install.sh or Tulez executable in the payload directory.");
         }
 
         if (OperatingSystem.IsLinux())
         {
             EnsureExecutable(installSh);
             EnsureExecutable(fileeExe);
-            var cli = Path.Combine(payloadDir, "filee-cli");
+            var cli = Path.Combine(payloadDir, "tulez-cli");
             if (File.Exists(cli))
                 EnsureExecutable(cli);
             var uninstall = Path.Combine(payloadDir, "uninstall.sh");
@@ -988,7 +988,7 @@ public sealed partial class UpdateService : ObservableObject
             var root = !string.IsNullOrWhiteSpace(dataHome)
                 ? dataHome
                 : Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            return Path.Combine(root, "filee");
+            return Path.Combine(root, "tulez");
         }
         return Path.GetTempPath();
     }
@@ -1169,7 +1169,7 @@ public sealed partial class UpdateService : ObservableObject
         var root = !string.IsNullOrWhiteSpace(dataHome)
             ? dataHome
             : Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        return Path.Combine(root, "filee", "application");
+        return Path.Combine(root, "tulez", "application");
     }
 
     /// <summary>True when release tag <paramref name="tag"/> ("v1.2.0") is a higher version than <paramref name="current"/>.</summary>

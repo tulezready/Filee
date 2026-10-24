@@ -135,7 +135,7 @@ public sealed class GnomePointerBridgeTests
     {
         if (!OperatingSystem.IsLinux())
             return;
-        var directory = Path.Combine(Path.GetTempPath(), "filee-gnome-" + Guid.NewGuid().ToString("N"));
+        var directory = Path.Combine(Path.GetTempPath(), "tulez-gnome-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(directory);
         var path = Path.Combine(directory, "pointer.sock");
         using var deadline = new CancellationTokenSource(TimeSpan.FromSeconds(10));
@@ -167,7 +167,7 @@ public sealed class GnomePointerBridgeTests
     {
         if (!OperatingSystem.IsLinux())
             return;
-        var directory = Path.Combine(Path.GetTempPath(), "filee-gnome-" + Guid.NewGuid().ToString("N"));
+        var directory = Path.Combine(Path.GetTempPath(), "tulez-gnome-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(directory);
         var path = Path.Combine(directory, "pointer.sock");
         using var deadline = new CancellationTokenSource(TimeSpan.FromSeconds(10));

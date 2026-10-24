@@ -9,7 +9,7 @@ using PDFtoImage;
 using PDFtoImage.Exceptions;
 using SkiaSharp;
 
-#pragma warning disable CA1416 // PDFium ships for every desktop platform Filee targets.
+#pragma warning disable CA1416 // PDFium ships for every desktop platform Tulez targets.
 
 namespace Filee.Engines.Pdf;
 

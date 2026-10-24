@@ -113,7 +113,7 @@ internal static class HistoryThumbnails
         if (ffmpeg is null || !File.Exists(ffmpeg))
             return null;
 
-        var temp = Path.Combine(Path.GetTempPath(), $"filee-thumb-{Guid.NewGuid():N}.jpg");
+        var temp = Path.Combine(Path.GetTempPath(), $"tulez-thumb-{Guid.NewGuid():N}.jpg");
         try
         {
             // One seek to 1s (or nearest keyframe) with FFmpeg scaling to min(Size, Size) to avoid huge 8K frame buffers.

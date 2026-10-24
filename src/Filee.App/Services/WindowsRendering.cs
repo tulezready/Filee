@@ -15,7 +15,7 @@ namespace Filee.App.Services;
 
 internal static class WindowsRendering
 {
-    public const string Variable = "FILEE_RENDERING";
+    public const string Variable = "TULEZ_RENDERING";
 
     /// <summary>FILEE_RENDERING's values besides "auto" (or unset): Avalonia's defaults.</summary>
     public static readonly IReadOnlyList<string> Choices = ["dcomp", "redirection", "software"];

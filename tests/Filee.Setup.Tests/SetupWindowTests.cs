@@ -37,7 +37,7 @@ public class SetupWindowTests
     {
         public InstallChoices? Installed { get; private set; }
         public bool? DeletedSettings { get; private set; }
-        public InstallResult Result { get; set; } = new(new LaunchRequest(@"C:\Program Files\Filee\Filee.exe", "--background"), []);
+        public InstallResult Result { get; set; } = new(new LaunchRequest(@"C:\Program Files\Tulez\Tulez.exe", "--background"), []);
         public TaskCompletionSource? Hold { get; set; }
 
         public InstallResult Install(InstallChoices choices, IProgress<SetupProgress> progress)
@@ -70,15 +70,15 @@ public class SetupWindowTests
         App.ApplyLook(Application.Current!, texts);
         var runner = new FakeRunner();
         var previous = update
-            ? new PreviousInstall(@"C:\Program Files\Filee", "1.12.0", InstallScope.Machine, true, SetupTasks.Defaults, "en", null)
+            ? new PreviousInstall(@"C:\Program Files\Tulez", "1.12.0", InstallScope.Machine, true, SetupTasks.Defaults, "en", null)
             : null;
-        var choices = new InstallChoices(@"C:\Program Files\Filee", InstallScope.Machine, SetupTasks.Defaults, ["pandoc"], texts.Language);
+        var choices = new InstallChoices(@"C:\Program Files\Tulez", InstallScope.Machine, SetupTasks.Defaults, ["pandoc"], texts.Language);
         var engines = update || uninstall ? [] : Offers.Select(o => (o, o.Id == "ffmpeg")).ToList();
         var model = new SetupViewModel(texts, runner, "2.0.0", choices, previous, engines, modernMenuSupported: true,
             neededSpace: 420_000_000, uninstall: uninstall)
         {
-            LogFile = @"C:\Users\me\AppData\Local\Temp\Filee-Setup-20261020-101500.log",
-            SettingsFolder = @"C:\Users\me\AppData\Roaming\Filee",
+            LogFile = @"C:\Users\me\AppData\Local\Temp\Tulez-Setup-20261020-101500.log",
+            SettingsFolder = @"C:\Users\me\AppData\Roaming\Tulez",
         };
         return (model, texts, runner);
     }
@@ -110,7 +110,7 @@ public class SetupWindowTests
         Assert.Equal(model.Deck!.Slides.Count, slides.Slides.Count);
         Check(window, $"setup-3-installing-{language}.png");
 
-        runner.Result = new InstallResult(new LaunchRequest(@"C:\Program Files\Filee\Filee.exe", "--install-engines=pandoc"),
+        runner.Result = new InstallResult(new LaunchRequest(@"C:\Program Files\Tulez\Tulez.exe", "--install-engines=pandoc"),
             [new RuntimeWarning([new MissingRuntime(@"engines\rhwp\rhwp.exe", "vcruntime140.dll")])]);
         runner.Hold.SetResult();
         await install;
@@ -185,7 +185,7 @@ public class SetupWindowTests
             var window = Show(model);
             Assert.True(model.IsUninstallPage);
             Assert.False(model.DeleteSettings);
-            Assert.Contains(@"C:\Users\me\AppData\Roaming\Filee", model.SettingsText);
+            Assert.Contains(@"C:\Users\me\AppData\Roaming\Tulez", model.SettingsText);
             Check(window, $"uninstall-1-confirm-{language}.png");
             await model.UninstallAsync();
             Pump();
@@ -262,7 +262,7 @@ public class SetupWindowTests
     [AvaloniaTheory]
     [InlineData("ko")]
     [InlineData("ar")]
-    public void Picking_a_language_changes_every_text_and_is_handed_to_filee(string language)
+    public void Picking_a_language_changes_every_text_and_is_handed_to_tulez(string language)
     {
         var (model, texts, _) = Model("en");
         var window = Show(model);

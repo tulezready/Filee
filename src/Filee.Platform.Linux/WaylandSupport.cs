@@ -16,7 +16,7 @@ public static class WaylandSupport
 
     /// <summary><see cref="IsNativeWaylandRequested(bool, string?, string?)"/> for this process.</summary>
     public static bool NativeWaylandRequested => IsNativeWaylandRequested(OperatingSystem.IsLinux(),
-        Environment.GetEnvironmentVariable("FILEE_USE_WAYLAND"), Environment.GetEnvironmentVariable("WAYLAND_DISPLAY"));
+        Environment.GetEnvironmentVariable("TULEZ_USE_WAYLAND"), Environment.GetEnvironmentVariable("WAYLAND_DISPLAY"));
 
     /// <summary>
     /// Whether the compositor has a way to put the donut at the cursor: KDE Plasma (the KWin script) or Hyprland (a

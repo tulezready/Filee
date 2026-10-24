@@ -63,12 +63,12 @@ public class PdfFinishingTests(EngineFixture fx) : IClassFixture<EngineFixture>
     {
         var pdf = BlankPdf(fx.NewFolder(), 1);
 
-        var job = await fx.ConvertAsync([pdf], new Preset { TargetFormat = "pdf", Pdf = { Password = "filee-1234" } });
+        var job = await fx.ConvertAsync([pdf], new Preset { TargetFormat = "pdf", Pdf = { Password = "tulez-1234" } });
 
         Assert.Equal(JobState.Completed, job.State);
         var output = job.Outputs.Single();
         Assert.ThrowsAny<Exception>(() => PdfReader.Open(output, PdfDocumentOpenMode.Import).Dispose());
-        using var opened = PdfReader.Open(output, "filee-1234", PdfDocumentOpenMode.Import);
+        using var opened = PdfReader.Open(output, "tulez-1234", PdfDocumentOpenMode.Import);
         Assert.Equal(1, opened.PageCount);
         Assert.Contains("/AESV3", await File.ReadAllTextAsync(output, System.Text.Encoding.Latin1, TestContext.Current.CancellationToken));
     }

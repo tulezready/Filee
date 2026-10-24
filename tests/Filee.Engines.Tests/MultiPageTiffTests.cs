@@ -11,7 +11,7 @@ public sealed class MultiPageTiffTests(EngineFixture engines) : IClassFixture<En
     [Fact]
     public async Task Images_and_a_multi_page_tiff_become_one_tiff_with_every_page()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-tiff-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-tiff-").FullName;
         try
         {
             var red = Path.Combine(folder, "a.png");

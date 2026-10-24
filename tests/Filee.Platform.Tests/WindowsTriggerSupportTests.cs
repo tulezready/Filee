@@ -23,12 +23,12 @@ public sealed class WindowsTriggerSupportTests
     [Fact]
     public void The_startup_entry_read_back_must_be_the_one_written()
     {
-        const string written = "\"C:\\Program Files\\Filee\\Filee.exe\" --background";
+        const string written = "\"C:\\Program Files\\Tulez\\Tulez.exe\" --background";
         WindowsPlatformServices.CheckStartupEntry(written, written);
 
         Assert.Throws<StartupEntryNotKeptException>(() => WindowsPlatformServices.CheckStartupEntry(written, null));
         Assert.Throws<StartupEntryNotKeptException>(() =>
-            WindowsPlatformServices.CheckStartupEntry(written, "\"C:\\Program Files\\Filee\\Filee.exe\""));
+            WindowsPlatformServices.CheckStartupEntry(written, "\"C:\\Program Files\\Tulez\\Tulez.exe\""));
         Assert.Throws<StartupEntryNotKeptException>(() => WindowsPlatformServices.CheckStartupEntry(written, new byte[] { 1 }));
     }
 }

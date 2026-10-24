@@ -183,19 +183,19 @@ jobs:
       - name: Check glibc requirements
         if: runner.os == 'Linux'
         shell: bash
-        run: python3 build/check-elf-glibc.py --max 2.35 "$FILEE_SMOKE_PACKAGE"
+        run: python3 build/check-elf-glibc.py --max 2.35 "$TULEZ_SMOKE_PACKAGE"
 
       - name: Launch native desktop app
         shell: bash
         run: python3 build/smoke-launch-app.py
 
-      - name: Collect Filee logs
+      - name: Collect Tulez logs
         if: always()
         shell: bash
         run: |
-          mkdir -p "$RUNNER_TEMP/filee-screens"
-          for logs in "$HOME/Library/Application Support/Filee/logs" "$HOME/.config/Filee/logs"; do
-            if [ -d "$logs" ]; then cp -R "$logs" "$RUNNER_TEMP/filee-screens/"; fi
+          mkdir -p "$RUNNER_TEMP/tulez-screens"
+          for logs in "$HOME/Library/Application Support/Tulez/logs" "$HOME/.config/Tulez/logs"; do
+            if [ -d "$logs" ]; then cp -R "$logs" "$RUNNER_TEMP/tulez-screens/"; fi
           done
 
       - name: Upload packages
@@ -216,8 +216,8 @@ jobs:
           path: |
             TestResults/${{ matrix.rid }}/
             tests/Filee.App.Tests/bin/Release/net10.0/screenshots/
-            ${{ runner.temp }}/filee-startup.log
-            ${{ runner.temp }}/filee-screens/
+            ${{ runner.temp }}/tulez-startup.log
+            ${{ runner.temp }}/tulez-screens/
           if-no-files-found: ignore
 
   # The packages built above, unpacked and started on the oldest supported Ubuntu, with only the runtime libraries a
@@ -261,18 +261,18 @@ jobs:
 
       - name: Check glibc requirements
         shell: bash
-        run: python3 build/check-elf-glibc.py --max 2.35 "$FILEE_SMOKE_PACKAGE"
+        run: python3 build/check-elf-glibc.py --max 2.35 "$TULEZ_SMOKE_PACKAGE"
 
       - name: Launch native desktop app
         shell: bash
         run: python3 build/smoke-launch-app.py
 
-      - name: Collect Filee logs
+      - name: Collect Tulez logs
         if: always()
         shell: bash
         run: |
-          mkdir -p "$RUNNER_TEMP/filee-screens"
-          if [ -d "$HOME/.config/Filee/logs" ]; then cp -R "$HOME/.config/Filee/logs" "$RUNNER_TEMP/filee-screens/"; fi
+          mkdir -p "$RUNNER_TEMP/tulez-screens"
+          if [ -d "$HOME/.config/Tulez/logs" ]; then cp -R "$HOME/.config/Tulez/logs" "$RUNNER_TEMP/tulez-screens/"; fi
 
       - name: Upload diagnostics
         if: always()
@@ -280,6 +280,6 @@ jobs:
         with:
           name: ubuntu-22-04-results-${{ matrix.rid }}
           path: |
-            ${{ runner.temp }}/filee-startup.log
-            ${{ runner.temp }}/filee-screens/
+            ${{ runner.temp }}/tulez-startup.log
+            ${{ runner.temp }}/tulez-screens/
           if-no-files-found: ignore

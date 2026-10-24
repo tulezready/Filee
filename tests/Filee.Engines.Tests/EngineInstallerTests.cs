@@ -12,7 +12,7 @@ namespace Filee.Engines.Tests;
 
 public sealed class EngineInstallerTests : IDisposable
 {
-    private readonly string _root = Path.Combine(Path.GetTempPath(), "filee-installer-" + Guid.NewGuid().ToString("N")[..8]);
+    private readonly string _root = Path.Combine(Path.GetTempPath(), "tulez-installer-" + Guid.NewGuid().ToString("N")[..8]);
 
     public void Dispose()
     {
@@ -23,7 +23,7 @@ public sealed class EngineInstallerTests : IDisposable
     public void A_separate_data_folder_keeps_its_own_engines()
     {
         Assert.Equal(Path.Combine(_root, "engines"), EngineEnvironment.DefaultDownloadRoot(_root));
-        Assert.Equal(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Filee", "engines"),
+        Assert.Equal(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Tulez", "engines"),
             EngineEnvironment.DefaultDownloadRoot(null));
     }
 
@@ -194,7 +194,7 @@ public sealed class EngineInstallerTests : IDisposable
         var folder = Path.Combine(_root, "ffmpeg");
         Assert.Equal("working encoder", File.ReadAllText(Path.Combine(folder, "bin", programs[0])));
         Assert.Equal("working probe", File.ReadAllText(Path.Combine(folder, "bin", programs[1])));
-        Assert.Equal(previousComponent.Sha256, File.ReadAllText(Path.Combine(folder, ".filee-component")));
+        Assert.Equal(previousComponent.Sha256, File.ReadAllText(Path.Combine(folder, ".tulez-component")));
         Assert.True(previousInstaller.IsUpToDate(package));
         Assert.True(installer.IsInstalled(package));
         Assert.False(installer.IsUpToDate(package));

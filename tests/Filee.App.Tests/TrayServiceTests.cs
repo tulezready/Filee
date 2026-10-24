@@ -17,7 +17,7 @@ public sealed class TrayServiceTests
     {
         TestServices.EnsureInitialized("en");
         var app = Application.Current!;
-        var directory = Directory.CreateTempSubdirectory("filee-tray-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-tray-").FullName;
         try
         {
             var store = new UserDataStore(directory);

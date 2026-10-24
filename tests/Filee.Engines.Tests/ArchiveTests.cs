@@ -208,7 +208,7 @@ public class ArchiveTests(EngineFixture fx) : IClassFixture<EngineFixture>
         var overwrite = Extract;
         overwrite.Output.Conflict = ConflictPolicy.Overwrite;
         Assert.Equal(target, (await ConvertOkAsync(zip, overwrite)).Outputs.Single());
-        Assert.Equal("Filee archive test\n", await File.ReadAllTextAsync(Path.Combine(target, "readme.txt"), Ct));
+        Assert.Equal("Tulez archive test\n", await File.ReadAllTextAsync(Path.Combine(target, "readme.txt"), Ct));
         Assert.Equal("keep", await File.ReadAllTextAsync(Path.Combine(target, "mine.txt"), Ct));
         Assert.True(File.Exists(Path.Combine(target, "docs", "보고서", "data.csv")));
 

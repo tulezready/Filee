@@ -1,18 +1,18 @@
 <#
 .SYNOPSIS
-  Builds the Windows installer Filee-<version>-win-Setup.exe (Filee's own, src/Filee.Setup) and, with -Portable, the
+  Builds the Windows installer Tulez-<version>-win-Setup.exe (Tulez's own, src/Filee.Setup) and, with -Portable, the
   portable zip, into -OutputDir.
 
 .DESCRIPTION
   Without -PublishDir the app is published first (Release, self-contained, -p:FileeRelease=true) into
   publish/win-x64, together with the Windows 11 Explorer menu extension (build-explorer-menu.ps1), the bundled
-  small engines rhwp and 7-Zip and the Microsoft C++ runtime DLLs next to rhwp.exe and Filee.exe
+  small engines rhwp and 7-Zip and the Microsoft C++ runtime DLLs next to rhwp.exe and Tulez.exe
   (fetch-engines.ps1); the large engines are downloaded by the app (engines.json).
 
   Setup itself (src/Filee.Setup) is published as one self-contained, trimmed program (no .NET needed on the PC);
   build/tools/make-setup.cs appends the publish folder to it as an LZMA payload with a SHA-256 manifest, and the
   engines Setup offers from EngineDownloads. The portable zip is the publish folder as it is: without Setup's
-  uninstall.exe next to Filee.exe, Filee knows it is a portable copy.
+  uninstall.exe next to Tulez.exe, Tulez knows it is a portable copy.
 
 .PARAMETER CertificateThumbprint
   Signs the release (build/sign-windows.ps1): the programs in the publish folder that come unsigned, the Setup
@@ -64,8 +64,8 @@ if ($CheckOnly) {
     Remove-Item $check -Recurse -Force -ErrorAction SilentlyContinue
     $PublishDir = Join-Path $check 'app'
     New-Item -ItemType Directory -Force -Path (Join-Path $PublishDir 'cli'), (Join-Path $PublishDir 'engines\rhwp') | Out-Null
-    Set-Content (Join-Path $PublishDir 'Filee.exe') 'stub' -NoNewline
-    Set-Content (Join-Path $PublishDir 'cli\filee.cmd') "@`"%~dp0..\filee-cli.exe`" %*" -Encoding ascii
+    Set-Content (Join-Path $PublishDir 'Tulez.exe') 'stub' -NoNewline
+    Set-Content (Join-Path $PublishDir 'cli\tulez.cmd') "@`"%~dp0..\tulez-cli.exe`" %*" -Encoding ascii
     Set-Content (Join-Path $PublishDir 'engines\rhwp\rhwp.exe') 'stub' -NoNewline
     $OutputDir = $check
 }
@@ -86,7 +86,7 @@ elseif (-not $PublishDir) {
     # Filee.App's publish removes them, but publishing the command line into the same folder brings them back.
     Get-ChildItem $PublishDir -Filter 'lib*.pdb' | Remove-Item
     New-Item -ItemType Directory -Force -Path (Join-Path $PublishDir 'cli') | Out-Null
-    Set-Content (Join-Path $PublishDir 'cli\filee.cmd') "@`"%~dp0..\filee-cli.exe`" %*" -Encoding ascii
+    Set-Content (Join-Path $PublishDir 'cli\tulez.cmd') "@`"%~dp0..\tulez-cli.exe`" %*" -Encoding ascii
     # Next to Filee.exe: the Explorer menu package's external location is the install folder.
     & (Join-Path $PSScriptRoot 'build-explorer-menu.ps1') -Destination $PublishDir -Version $Version
     # Only the small rhwp and 7-Zip are bundled; the app downloads the others when the user picks them. The Microsoft
@@ -95,7 +95,7 @@ elseif (-not $PublishDir) {
     & (Join-Path $PSScriptRoot 'fetch-engines.ps1') -Only rhwp, 7zip -Destination (Join-Path $PublishDir 'engines') -RuntimeTo $PublishDir
 }
 $PublishDir = (Resolve-Path $PublishDir).Path
-if (-not (Test-Path (Join-Path $PublishDir 'Filee.exe'))) { throw "Filee.exe is missing in $PublishDir" }
+if (-not (Test-Path (Join-Path $PublishDir 'Tulez.exe'))) { throw "Tulez.exe is missing in $PublishDir" }
 if (-not $CheckOnly) {
     # Without them rhwp and unhwp fail on PCs without the Visual C++ Redistributable (#248). They go into the payload
     # and the portable zip; Setup checks again after unpacking (RuntimeCheck) on the user's PC.
@@ -127,7 +127,7 @@ if ($sign) {
     & $sign -Path $PublishDir, $SetupProgram -CertificateThumbprint $CertificateThumbprint
 }
 
-$setupExe = Join-Path $OutputDir "Filee-$Version-win-Setup.exe"
+$setupExe = Join-Path $OutputDir "Tulez-$Version-win-Setup.exe"
 Write-Host "pack installer $Version"
 $fast = @(if ($CheckOnly) { '--fast' })
 Push-Location $root
@@ -152,14 +152,14 @@ if ($CheckOnly) {
             throw "$(Split-Path $exe -Leaf) $arguments failed with exit code $($process.ExitCode)"
         }
     }
-    $installed = Join-Path $sandbox 'Program Files\Filee'
+    $installed = Join-Path $sandbox 'Program Files\Tulez'
     Invoke-Setup $setupExe @('/MERGETASKS=desktopicon')
-    foreach ($file in 'Filee.exe', 'cli\filee.cmd', 'engines\rhwp\rhwp.exe', 'uninstall.exe', 'uninstall.json') {
+    foreach ($file in 'Tulez.exe', 'cli\tulez.cmd', 'engines\rhwp\rhwp.exe', 'uninstall.exe', 'uninstall.json') {
         if (-not (Test-Path (Join-Path $installed $file))) { throw "Setup did not install $file" }
     }
     $registry = Get-Content (Join-Path $sandbox 'registry.json') -Raw
-    if ($registry -notmatch 'C8686E06-8327-40A2-B0F7-3DEDD61D9248\}_is1' -or $registry -notmatch 'uninstall\.exe') { throw 'Setup did not write the uninstall entry' }
-    if (-not (Test-Path (Join-Path $sandbox 'Public\Desktop\Filee.lnk'))) { throw 'Setup did not create the desktop shortcut' }
+    if ($registry -notmatch '4F1D2B7A-9C3E-4A86-B5D1-7E2C9A0F3B64\}_is1' -or $registry -notmatch 'uninstall\.exe') { throw 'Setup did not write the uninstall entry' }
+    if (-not (Test-Path (Join-Path $sandbox 'Public\Desktop\Tulez.lnk'))) { throw 'Setup did not create the desktop shortcut' }
     Invoke-Setup $setupExe @()
     Invoke-Setup (Join-Path $installed 'uninstall.exe') @()
     if (Test-Path $installed) { throw "The uninstaller left $installed" }
@@ -170,7 +170,7 @@ if ($CheckOnly) {
 
 $files = @($setupExe)
 if ($Portable) {
-    $zip = Join-Path $OutputDir "Filee-$Version-win-Portable.zip"
+    $zip = Join-Path $OutputDir "Tulez-$Version-win-Portable.zip"
     Remove-Item $zip -ErrorAction SilentlyContinue
     Write-Host "zip  $zip"
     Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -179,7 +179,7 @@ if ($Portable) {
 }
 
 # Checksums for people who verify their download.
-$sums = Join-Path $OutputDir "Filee-$Version-SHA256SUMS.txt"
+$sums = Join-Path $OutputDir "Tulez-$Version-SHA256SUMS.txt"
 $files | ForEach-Object { "$((Get-FileHash $_ -Algorithm SHA256).Hash.ToLowerInvariant())  $(Split-Path $_ -Leaf)" } |
     Set-Content $sums -Encoding ascii
 Get-Item ($files + $sums) | Format-Table Name, Length

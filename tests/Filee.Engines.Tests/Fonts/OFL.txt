@@ -1,5 +1,5 @@
 Test fonts for tests/Filee.Engines.Tests/FontTests.cs, made by make-test-fonts.py from the Noto fonts downloaded
-by build/fetch-fonts.ps1 and renamed "Filee Test ..." so these modified versions don't carry the original names:
+by build/fetch-fonts.ps1 and renamed "Tulez Test ..." so these modified versions don't carry the original names:
 
 - FileeTest-TrueType.ttf: a subset of Noto Sans Regular 2.015 (hinted TrueType).
   Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)

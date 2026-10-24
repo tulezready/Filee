@@ -39,13 +39,13 @@ svg.Append("</svg>");
 
 var outDir = Path.Combine("src", "Filee.App", "Assets", "Icons");
 Directory.CreateDirectory(outDir);
-File.WriteAllText(Path.Combine(outDir, "filee.svg"), svg.ToString());
+File.WriteAllText(Path.Combine(outDir, "tulez.svg"), svg.ToString());
 
 var settings = new MagickReadSettings { BackgroundColor = MagickColors.Transparent, Format = MagickFormat.Svg };
 using var master = new MagickImage(Encoding.UTF8.GetBytes(svg.ToString()), settings);
-master.Write(Path.Combine(outDir, "filee.png"), MagickFormat.Png);
+master.Write(Path.Combine(outDir, "tulez.png"), MagickFormat.Png);
 
 // One image + "auto-resize" makes ImageMagick embed every size into a single .ico file.
 master.Settings.SetDefine(MagickFormat.Icon, "auto-resize", "256,64,48,32,24,16");
-master.Write(Path.Combine(outDir, "filee.ico"), MagickFormat.Icon);
+master.Write(Path.Combine(outDir, "tulez.ico"), MagickFormat.Icon);
 Console.WriteLine($"Icons written to {outDir}");

@@ -38,7 +38,7 @@ public class FailedFilesTests
     public void Retry_converts_the_failed_files_that_are_still_there_with_the_saved_preset()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-retry-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-retry-").FullName;
         try
         {
             var kept = Path.Combine(folder, "kept.png");

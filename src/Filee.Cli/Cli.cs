@@ -26,8 +26,8 @@ internal static class Cli
         var options = CliOptions.Parse(args);
         if (options.Error is not null)
         {
-            errors.WriteLine($"filee: {options.Error}");
-            errors.WriteLine("Run 'filee help' for usage.");
+            errors.WriteLine($"tulez: {options.Error}");
+            errors.WriteLine("Run 'tulez help' for usage.");
             return UsageError;
         }
         switch (options.Command)
@@ -36,7 +36,7 @@ internal static class Cli
                 output.Write(Help.Text(options.Inputs.FirstOrDefault()));
                 return Success;
             case "version":
-                output.WriteLine($"filee {Help.Version}");
+                output.WriteLine($"tulez {Help.Version}");
                 return Success;
         }
 
@@ -60,12 +60,12 @@ internal static class Cli
         var missing = new List<string>();
         var files = ExpandInputs(options.Inputs, options.Recursive, missing);
         foreach (var path in missing)
-            errors.WriteLine($"filee: not found: {path}");
+            errors.WriteLine($"tulez: not found: {path}");
         if (missing.Count > 0)
             return UsageError;
         if (files.Count == 0)
         {
-            errors.WriteLine("filee: no files to convert.");
+            errors.WriteLine("tulez: no files to convert.");
             return NothingToDo;
         }
 
@@ -104,7 +104,7 @@ internal static class Cli
             settleTime: settle);
         if (!watcher.Start())
         {
-            errors.WriteLine($"filee: {watcher.Error}");
+            errors.WriteLine($"tulez: {watcher.Error}");
             return UsageError;
         }
         if (!options.Quiet)
@@ -227,12 +227,12 @@ internal static class Cli
         {
             if (FindFormat(options.To) is not { } format)
             {
-                errors.WriteLine($"filee: unknown format '{options.To}'. Run 'filee formats' for the list.");
+                errors.WriteLine($"tulez: unknown format '{options.To}'. Run 'tulez formats' for the list.");
                 return null;
             }
             if (!format.Writable)
             {
-                errors.WriteLine($"filee: Filee reads {format.DisplayName} but can't write it.");
+                errors.WriteLine($"tulez: Tulez reads {format.DisplayName} but can't write it.");
                 return null;
             }
             preset = new Preset { TargetFormat = format.Id };
@@ -248,7 +248,7 @@ internal static class Cli
             var found = Find(host.Store.Presets.Where(p => !p.IsGroup && !p.IsTool)) ?? Find(host.Store.Presets);
             if (found is null)
             {
-                errors.WriteLine($"filee: no preset '{wanted}'. Run 'filee presets' for the list.");
+                errors.WriteLine($"tulez: no preset '{wanted}'. Run 'tulez presets' for the list.");
                 return null;
             }
             if (found.IsGroup)
@@ -256,13 +256,13 @@ internal static class Cli
                 // A donut group converts nothing; name what it holds so the right one is easy to pick.
                 var members = found.SubPresetIds.Select(host.Store.FindConversion).OfType<Preset>().Select(p => p.Id).ToList();
                 errors.WriteLine(members.Count > 0
-                    ? $"filee: '{wanted}' is a group on the donut, not a conversion. Use one of: {string.Join(", ", members)}"
-                    : $"filee: '{wanted}' is a group on the donut, not a conversion, and has no presets left. Run 'filee presets' for the list.");
+                    ? $"tulez: '{wanted}' is a group on the donut, not a conversion. Use one of: {string.Join(", ", members)}"
+                    : $"tulez: '{wanted}' is a group on the donut, not a conversion, and has no presets left. Run 'tulez presets' for the list.");
                 return null;
             }
             if (found.IsTool)
             {
-                errors.WriteLine($"filee: '{wanted}' is an interactive tool, not a conversion.");
+                errors.WriteLine($"tulez: '{wanted}' is an interactive tool, not a conversion.");
                 return null;
             }
             preset = found.Clone();
@@ -328,7 +328,7 @@ internal static class Cli
         {
             if (FindFormat(name) is not { } from)
             {
-                errors.WriteLine($"filee: unknown format '{name}'.");
+                errors.WriteLine($"tulez: unknown format '{name}'.");
                 return UsageError;
             }
             var installed = host.Catalog.CreatePlanner();
@@ -342,7 +342,7 @@ internal static class Cli
             output.WriteLine($"{from.DisplayName} ({string.Join(", ", from.Extensions)}) converts to:");
             output.WriteLine(now.Count > 0 ? "  " + string.Join(", ", now) : "  (nothing with the engines installed now)");
             if (later.Count > 0)
-                output.WriteLine($"With optional engines (install them in Filee, Settings → Engines):{Environment.NewLine}  {string.Join(", ", later)}");
+                output.WriteLine($"With optional engines (install them in Tulez, Settings → Engines):{Environment.NewLine}  {string.Join(", ", later)}");
             return Success;
         }
 
@@ -353,7 +353,7 @@ internal static class Cli
                 output.WriteLine($"  {format.Id,-10} {format.DisplayName}{(format.Writable ? "" : " (read only)")}  .{string.Join(" .", format.Extensions)}");
         }
         output.WriteLine();
-        output.WriteLine("Run 'filee formats <format>' to see what a format converts to.");
+        output.WriteLine("Run 'tulez formats <format>' to see what a format converts to.");
         return Success;
     }
 
@@ -363,7 +363,7 @@ internal static class Cli
         foreach (var preset in host.Store.Presets.Where(p => !p.IsGroup && !p.IsTool))
             output.WriteLine($"{preset.Id,-24} {host.Texts.DisplayName(preset),-28} {preset.TargetFormat}");
         output.WriteLine();
-        output.WriteLine("Use one with: filee convert <files> --preset <id or name>");
+        output.WriteLine("Use one with: tulez convert <files> --preset <id or name>");
         return Success;
     }
 }

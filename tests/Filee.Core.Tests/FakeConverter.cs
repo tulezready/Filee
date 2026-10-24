@@ -191,7 +191,7 @@ internal sealed class FakeJoiner : IMediaJoiner
 /// <summary>Creates and removes a unique temp directory.</summary>
 internal sealed class TempDir : IDisposable
 {
-    public string Path { get; } = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "filee-tests", Guid.NewGuid().ToString("N")[..8]);
+    public string Path { get; } = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "tulez-tests", Guid.NewGuid().ToString("N")[..8]);
 
     public TempDir() => Directory.CreateDirectory(Path);
 

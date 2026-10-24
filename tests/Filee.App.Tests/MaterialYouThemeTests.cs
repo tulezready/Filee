@@ -209,7 +209,7 @@ public class MaterialYouThemeTests
     public void ThemePageViewModel_switches_styles_and_presets()
     {
         TestServices.EnsureInitialized("en");
-        var directory = Directory.CreateTempSubdirectory("filee-vm-test-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-vm-test-").FullName;
         var store = new UserDataStore(directory);
         store.Load();
 
@@ -247,7 +247,7 @@ public class MaterialYouThemeTests
     public void Changing_accent_after_preset_clears_preset_key_and_applies_swatch()
     {
         TestServices.EnsureInitialized("en");
-        var directory = Directory.CreateTempSubdirectory("filee-preset-swatch-test-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-preset-swatch-test-").FullName;
         try
         {
             var store = new UserDataStore(directory);

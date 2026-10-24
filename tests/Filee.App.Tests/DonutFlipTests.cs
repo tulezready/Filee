@@ -129,7 +129,7 @@ public class DonutFlipTests
         var vm = AppHost.Get<RadialViewModel>();
         var radial = new RadialController(vm, AppHost.Get<ConversionService>(), AppHost.Get<WindowService>(), Store,
             AppHost.Get<IPlatformServices>(), triggers, NullLogger<RadialController>.Instance);
-        var folder = Directory.CreateTempSubdirectory("filee-wave-drop-");
+        var folder = Directory.CreateTempSubdirectory("tulez-wave-drop-");
         var conversions = AppHost.Get<ConversionService>();
         try
         {
@@ -832,7 +832,7 @@ public class DonutFlipTests
         var vm = AppHost.Get<RadialViewModel>();
         var radial = new RadialController(vm, AppHost.Get<ConversionService>(), AppHost.Get<WindowService>(), Store,
             AppHost.Get<IPlatformServices>(), triggers, NullLogger<RadialController>.Instance);
-        var folder = Directory.CreateTempSubdirectory("filee-flip-");
+        var folder = Directory.CreateTempSubdirectory("tulez-flip-");
         try
         {
             var file = Path.Combine(folder.FullName, "photo.jpg");
@@ -967,7 +967,7 @@ public class DonutFlipTests
             var vm = AppHost.Get<RadialViewModel>();
             var radial = new RadialController(vm, AppHost.Get<ConversionService>(), AppHost.Get<WindowService>(), Store,
                 AppHost.Get<IPlatformServices>(), triggers, NullLogger<RadialController>.Instance);
-            var folder = Directory.CreateTempSubdirectory("filee-flip-");
+            var folder = Directory.CreateTempSubdirectory("tulez-flip-");
             try
             {
                 var file = Path.Combine(folder.FullName, "photo.jpg");

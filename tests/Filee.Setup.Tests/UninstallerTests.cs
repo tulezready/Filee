@@ -14,7 +14,7 @@ public class UninstallerTests
     }
 
     [Fact]
-    public void Uninstalling_removes_filee_and_keeps_the_settings()
+    public void Uninstalling_removes_tulez_and_keeps_the_settings()
     {
         var (bench, record) = Installed(SetupTasks.Defaults with { DesktopIcon = true });
         using var _ = bench;
@@ -28,11 +28,11 @@ public class UninstallerTests
 
         Assert.Empty(later);
         // Filee cleaned up after itself for the user first (Explorer menu, startup entry, downloaded engines).
-        Assert.Equal("run Filee.exe --uninstall-cleanup", bench.System.Calls.First(c => c.StartsWith("run ", StringComparison.Ordinal)));
+        Assert.Equal("run Tulez.exe --uninstall-cleanup", bench.System.Calls.First(c => c.StartsWith("run ", StringComparison.Ordinal)));
         Assert.Contains("unregister-menu", bench.System.Calls);
         Assert.False(Directory.Exists(bench.InstallFolder));
-        Assert.False(File.Exists(Path.Combine(bench.Paths.CommonStartMenu, "Filee.lnk")));
-        Assert.False(File.Exists(Path.Combine(bench.Paths.CommonDesktop, "Filee.lnk")));
+        Assert.False(File.Exists(Path.Combine(bench.Paths.CommonStartMenu, "Tulez.lnk")));
+        Assert.False(File.Exists(Path.Combine(bench.Paths.CommonDesktop, "Tulez.lnk")));
         Assert.False(bench.Registry.KeyExists(Hive.LocalMachine, SetupNames.UninstallKey));
         var path = bench.Registry.Get(Hive.LocalMachine, SetupNames.MachineEnvironmentKey, "Path")!;
         Assert.Equal(@"%SystemRoot%\system32;C:\Tools", path.Text);
@@ -45,7 +45,7 @@ public class UninstallerTests
     {
         var (bench, record) = Installed();
         using var _ = bench;
-        bench.Temp.Write(Path.Combine(Path.GetRelativePath(bench.Temp.Path, bench.Paths.SettingsFolder), @"logs\filee.log"));
+        bench.Temp.Write(Path.Combine(Path.GetRelativePath(bench.Temp.Path, bench.Paths.SettingsFolder), @"logs\tulez.log"));
         new Uninstaller(bench.Context).Run(bench.InstallFolder, record, deleteSettings: true, bench.Temp.Sub("trash"));
         Assert.False(Directory.Exists(bench.Paths.SettingsFolder));
         // Only Filee's folder: %APPDATA% itself stays.
@@ -113,7 +113,7 @@ public class UninstallerTests
     {
         var (bench, record) = Installed();
         using var _ = bench;
-        bench.System.Running.Add(new RunningProgram(11, Path.Combine(bench.InstallFolder, "filee-cli.exe")));
+        bench.System.Running.Add(new RunningProgram(11, Path.Combine(bench.InstallFolder, "tulez-cli.exe")));
         bench.System.Running.Add(new RunningProgram(12, Path.Combine(bench.InstallFolder, "uninstall.exe")));
         new Uninstaller(bench.Context).Run(bench.InstallFolder, record, deleteSettings: false, bench.Temp.Sub("trash"));
         Assert.Contains("kill 11", bench.System.Calls);
@@ -124,7 +124,7 @@ public class UninstallerTests
     public void Install_record_round_trip_and_bad_records()
     {
         using var temp = new TempFolder();
-        var record = new InstallRecord("2.0.0", InstallScope.User, ["Filee.exe", @"cli\filee.cmd"]);
+        var record = new InstallRecord("2.0.0", InstallScope.User, ["Tulez.exe", @"cli\tulez.cmd"]);
         File.WriteAllBytes(InstallRecord.PathIn(temp.Path), record.ToJson());
         var read = InstallRecord.Read(temp.Path)!;
         Assert.Equal(record.Version, read.Version);
@@ -143,7 +143,7 @@ public class UninstallerTests
 public class PreviousInstallTests
 {
     [Fact]
-    public void An_entry_without_filee_in_its_folder_is_no_installation()
+    public void An_entry_without_tulez_in_its_folder_is_no_installation()
     {
         using var temp = new TempFolder();
         var registry = new MemoryRegistry();
@@ -156,12 +156,12 @@ public class PreviousInstallTests
     public void Inno_setups_app_path_is_enough_and_the_scope_is_kept_apart()
     {
         using var temp = new TempFolder();
-        temp.Write(@"Filee\Filee.exe");
-        temp.Write(@"Filee\unins000.exe");
+        temp.Write(@"Tulez\Tulez.exe");
+        temp.Write(@"Tulez\unins000.exe");
         var registry = new MemoryRegistry();
-        registry.SetString(Hive.LocalMachine, SetupNames.UninstallKey, "Inno Setup: App Path", temp.Sub("Filee"));
+        registry.SetString(Hive.LocalMachine, SetupNames.UninstallKey, "Inno Setup: App Path", temp.Sub("Tulez"));
         var previous = PreviousInstall.Find(registry, InstallScope.Machine)!;
-        Assert.Equal(temp.Sub("Filee"), previous.Folder);
+        Assert.Equal(temp.Sub("Tulez"), previous.Folder);
         Assert.True(previous.ByInno);
         Assert.Null(previous.RecordedTasks);
         Assert.Contains("unins000.exe", previous.OwnedFiles());
@@ -173,7 +173,7 @@ public class PreviousInstallTests
     {
         using var temp = new TempFolder();
         var paths = SetupPaths.Sandbox(temp.Sub("pc"));
-        var folder = Path.GetDirectoryName(temp.Write(@"pc\Program Files\Filee\Filee.exe"))!;
+        var folder = Path.GetDirectoryName(temp.Write(@"pc\Program Files\Tulez\Tulez.exe"))!;
         var registry = new MemoryRegistry();
         registry.SetString(Hive.LocalMachine, SetupNames.UninstallKey, "InstallLocation", folder);
         // 1.x recorded the desktop icon and PATH, but the user deleted the shortcut since.
@@ -226,11 +226,11 @@ public class PathVariableTests
         using var temp = new TempFolder();
         var file = temp.Sub("registry.json");
         var registry = new MemoryRegistry(file);
-        registry.SetString(Hive.LocalMachine, SetupNames.UninstallKey, "DisplayName", "Filee");
+        registry.SetString(Hive.LocalMachine, SetupNames.UninstallKey, "DisplayName", "Tulez");
         registry.SetNumber(Hive.LocalMachine, SetupNames.UninstallKey, "NoModify", 1);
         registry.SetString(Hive.LocalMachine, SetupNames.MachineEnvironmentKey, "Path", "%SystemRoot%", expandable: true);
         var again = new MemoryRegistry(file);
-        Assert.Equal("Filee", again.Get(Hive.LocalMachine, SetupNames.UninstallKey, "DisplayName")?.Text);
+        Assert.Equal("Tulez", again.Get(Hive.LocalMachine, SetupNames.UninstallKey, "DisplayName")?.Text);
         Assert.Equal(1, again.Get(Hive.LocalMachine, SetupNames.UninstallKey, "NoModify")?.Value);
         Assert.True(again.Get(Hive.LocalMachine, SetupNames.MachineEnvironmentKey, "Path")!.Expandable);
         Assert.True(again.KeyExists(Hive.LocalMachine, @"Software\Microsoft\Windows\CurrentVersion\Uninstall"));

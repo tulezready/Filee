@@ -90,7 +90,7 @@ public sealed class WebDownloaderTests : IDisposable
 
     private Uri Url(string path) => new(_root + path.TrimStart('/'));
 
-    private static WebDownloader Downloader() => new(userAgent: "Filee-tests/1.0");
+    private static WebDownloader Downloader() => new(userAgent: "Tulez-tests/1.0");
 
     [Fact]
     public async Task Names_the_file_as_the_server_says_and_by_what_it_is()

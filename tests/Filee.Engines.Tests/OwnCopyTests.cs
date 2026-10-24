@@ -11,7 +11,7 @@ namespace Filee.Engines.Tests;
 [Collection("EngineEnvironment")] // OwnCopies is process-wide
 public sealed class OwnCopyTests : IDisposable
 {
-    private readonly string _folder = Directory.CreateTempSubdirectory("filee-own-").FullName;
+    private readonly string _folder = Directory.CreateTempSubdirectory("tulez-own-").FullName;
 
     public void Dispose()
     {
@@ -67,7 +67,7 @@ public sealed class EngineEnvironmentCollection;
 [Collection("EngineEnvironment")] // changes PATH and the system-copy cache
 public sealed class SystemCopyTests : IDisposable
 {
-    private readonly string _folder = Directory.CreateTempSubdirectory("filee-path-").FullName;
+    private readonly string _folder = Directory.CreateTempSubdirectory("tulez-path-").FullName;
     private readonly string? _path = Environment.GetEnvironmentVariable("PATH");
 
     public void Dispose()
@@ -78,7 +78,7 @@ public sealed class SystemCopyTests : IDisposable
     }
 
     [Fact]
-    public void A_tool_on_the_path_is_found_when_filee_has_no_copy()
+    public void A_tool_on_the_path_is_found_when_tulez_has_no_copy()
     {
         File.WriteAllBytes(Path.Combine(_folder, EngineEnvironment.ProgramName("ffmpeg.exe")), [0x4D, 0x5A]);
         File.WriteAllBytes(Path.Combine(_folder, EngineEnvironment.ProgramName("ffprobe.exe")), [0x4D, 0x5A]);

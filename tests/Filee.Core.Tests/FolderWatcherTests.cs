@@ -235,7 +235,7 @@ public class FolderWatcherTests
     [Fact]
     public async Task A_missing_folder_is_reported_instead_of_watched()
     {
-        var (watcher, _, _, queue) = Create(new WatchRule { Folder = Path.Combine(Path.GetTempPath(), "filee-missing-" + Guid.NewGuid().ToString("N")) });
+        var (watcher, _, _, queue) = Create(new WatchRule { Folder = Path.Combine(Path.GetTempPath(), "tulez-missing-" + Guid.NewGuid().ToString("N")) });
         await using var _ = queue;
         await using var __ = watcher;
 

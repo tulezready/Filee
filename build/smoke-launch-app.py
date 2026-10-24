@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Starts the packaged desktop app (FILEE_SMOKE_APP, set by build/smoke-portable.ps1), checks that it stays up, that a
-second start hands over to it (macOS) and that `filee --quit` ends it cleanly. On Linux it runs under Xvfb in an X11
+"""Starts the packaged desktop app (TULEZ_SMOKE_APP, set by build/smoke-portable.ps1), checks that it stays up, that a
+second start hands over to it (macOS) and that `tulez --quit` ends it cleanly. On Linux it runs under Xvfb in an X11
 session and fails when the app logged that the X11 input hook back end could not be loaded.
 
 Used by .github/workflows/portable.yml. Screenshots and the startup log go to $RUNNER_TEMP.
@@ -13,27 +13,27 @@ import subprocess
 import sys
 import time
 
-app = os.environ['FILEE_SMOKE_APP']
+app = os.environ['TULEZ_SMOKE_APP']
 temp = pathlib.Path(os.environ.get('RUNNER_TEMP', '/tmp'))
-shots = temp / 'filee-screens'
+shots = temp / 'tulez-screens'
 shots.mkdir(exist_ok=True)
 is_linux = sys.platform.startswith('linux')
 is_macos = sys.platform == 'darwin'
 command = [app, '--settings', '--install-engines=', '--context-menu=off', '--start-with-system=off']
 if is_linux:
     command = ['xvfb-run', '-a', 'env', '-u', 'WAYLAND_DISPLAY', 'XDG_SESSION_TYPE=x11', *command]
-log_path = temp / 'filee-startup.log'
+log_path = temp / 'tulez-startup.log'
 
 
-def filee_logs():
-    for folder in (pathlib.Path.home() / '.config/Filee/logs', pathlib.Path.home() / 'Library/Application Support/Filee/logs'):
+def tulez_logs():
+    for folder in (pathlib.Path.home() / '.config/Tulez/logs', pathlib.Path.home() / 'Library/Application Support/Tulez/logs'):
         if folder.is_dir():
             yield from sorted(folder.glob('*.log'))
 
 
 def check_input_hook():
     """The SharpHook loader reports ErrorLinuxLoadBackend when dlopen of libuiohook-xrecord.so fails."""
-    lines = [line for path in filee_logs() for line in path.read_text(errors='replace').splitlines()]
+    lines = [line for path in tulez_logs() for line in path.read_text(errors='replace').splitlines()]
     for line in lines:
         if 'input hook' in line:
             print(line)
@@ -54,7 +54,7 @@ with log_path.open('w') as log:
             try:
                 subprocess.run([app], check=False, timeout=30)
             except subprocess.TimeoutExpired:
-                raise RuntimeError('A second start did not hand over to the running Filee.')
+                raise RuntimeError('A second start did not hand over to the running Tulez.')
             time.sleep(4)
             subprocess.run(['screencapture', '-x', str(shots / 'second-start.png')], check=False, timeout=30)
             if process.poll() is not None:
@@ -68,10 +68,10 @@ with log_path.open('w') as log:
             process.poll()
             if time.monotonic() > quit_deadline:
                 quitter.kill()
-                raise RuntimeError('filee --quit did not finish.')
+                raise RuntimeError('tulez --quit did not finish.')
             time.sleep(0.05)
         if quitter.returncode != 0:
-            raise RuntimeError(f'filee --quit exited with {quitter.returncode}.')
+            raise RuntimeError(f'tulez --quit exited with {quitter.returncode}.')
         if process.wait(timeout=15) != 0:
             raise RuntimeError('The desktop app did not exit cleanly.')
         if is_linux:

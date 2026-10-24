@@ -10,7 +10,7 @@ namespace Filee.Core.Tests;
 public class UsmFormatTests
 {
     [Fact]
-    public void Usm_is_a_video_filee_reads_but_never_writes()
+    public void Usm_is_a_video_tulez_reads_but_never_writes()
     {
         var usm = FormatRegistry.Detect("cutscene.USM");
         Assert.NotNull(usm);

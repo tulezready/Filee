@@ -67,7 +67,7 @@ internal static class Program
             // The lock belongs to a Filee running as administrator: this process may not even open it. Before this
             // was caught, Filee ended here without a word (Explorer's menu showed a busy cursor, then nothing).
             Log.LogWarning("{Startup}", startup);
-            Log.LogWarning(ex, "Another Filee is running with administrator rights; this launch can't reach it");
+            Log.LogWarning(ex, "Another Tulez is running with administrator rights; this launch can't reach it");
             if (!installerCommand)
                 TellUserOnce("startup.elevated_other");
             return 1;
@@ -85,7 +85,7 @@ internal static class Program
             {
                 // Logged only when it failed: Explorer starts one Filee per selected file.
                 Log.LogWarning("{Startup}", startup);
-                Log.LogWarning("Could not hand {Count} argument(s) to the running Filee: {Result}", args.Length, result);
+                Log.LogWarning("Could not hand {Count} argument(s) to the running Tulez: {Result}", args.Length, result);
                 TellUserOnce(result == ForwardResult.AccessDenied ? "startup.elevated_other" : "startup.no_answer");
             }
             ReleaseInstance();
@@ -94,7 +94,7 @@ internal static class Program
 
         Log.LogInformation("{Startup}", startup);
         if (Elevation.ShellCannotReachFilee)
-            Log.LogWarning("Filee runs as administrator ({Elevation}) while Explorer doesn't: Explorer can't drop files on it, " +
+            Log.LogWarning("Tulez runs as administrator ({Elevation}) while Explorer doesn't: Explorer can't drop files on it, " +
                            "use its menu or have its selection read", Elevation);
 
         try
@@ -110,9 +110,9 @@ internal static class Program
         {
             // The window system has no display link for this screen: a Mac in a virtual machine without graphics
             // acceleration (VMware). Avalonia can't draw there; say so instead of quitting without a word.
-            StartupFailure.Report(ex, "Filee can't open its window on this Mac: macOS reports no display it can draw on. " +
+            StartupFailure.Report(ex, "Tulez can't open its window on this Mac: macOS reports no display it can draw on. " +
                                       "This happens in virtual machines without graphics acceleration (such as VMware). " +
-                                      "The filee command still works in Terminal.");
+                                      "The tulez command still works in Terminal.");
             return 1;
         }
         finally
@@ -139,7 +139,7 @@ internal static class Program
             if (!instance.IsFirst)
             {
                 // Another Filee started meanwhile (perhaps the restart did happen after all): it is the running one.
-                Log.LogWarning("Another Filee took the single-instance lock during the restart");
+                Log.LogWarning("Another Tulez took the single-instance lock during the restart");
                 instance.Dispose();
                 return;
             }
@@ -275,7 +275,7 @@ internal static class Program
     public static AppBuilder BuildAvaloniaApp()
     {
         var builder = AppBuilder.Configure<App>();
-#if FILEE_NATIVE_WAYLAND
+#if TULEZ_NATIVE_WAYLAND
         // The native backend is only compiled into Linux builds and only used when asked for (FILEE_USE_WAYLAND=1).
         builder = Filee.Platform.Linux.WaylandSupport.NativeWaylandRequested ? builder.UseWayland() : builder.UsePlatformDetect();
 #else
@@ -304,5 +304,5 @@ internal static class Program
 /// <summary>Embedded Noto fonts: <c>fonts:Filee#Noto Sans</c>, <c>#Noto Sans JP</c>, <c>#Noto Sans KR</c>,
 /// <c>#Noto Sans SC</c>, <c>#Noto Sans Devanagari</c>, <c>#Noto Sans Arabic</c>, <c>#Noto Sans Thai</c>.</summary>
 internal sealed class FileeFontCollection() : Avalonia.Media.Fonts.EmbeddedFontCollection(
-    new Uri("fonts:Filee", UriKind.Absolute),
-    new Uri("avares://Filee/Assets/Fonts", UriKind.Absolute));
+    new Uri("fonts:Tulez", UriKind.Absolute),
+    new Uri("avares://Tulez/Assets/Fonts", UriKind.Absolute));

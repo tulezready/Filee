@@ -35,7 +35,7 @@ public readonly record struct EngineInstallProgress(EngineInstallStage Stage, st
 /// <summary>Installs and removes <see cref="EnginePackage"/>s.</summary>
 public sealed class EngineInstaller
 {
-    private const string MarkerName = ".filee-component";
+    private const string MarkerName = ".tulez-component";
     private static readonly TimeSpan MsiTimeout = TimeSpan.FromMinutes(15);
 
     private readonly string _root;
@@ -199,7 +199,7 @@ public sealed class EngineInstaller
                     Replace(component.Id, staging);
                     break;
                 case "msi":
-                    await UnpackMsiAsync(component.Id, file, staging, Path.Combine(Path.GetTempPath(), "filee-msiexec.log"), cancellationToken);
+                    await UnpackMsiAsync(component.Id, file, staging, Path.Combine(Path.GetTempPath(), "tulez-msiexec.log"), cancellationToken);
                     Replace(component.Id, MsiProgramFolder(component.Id, staging));
                     break;
                 case "conda":
@@ -214,7 +214,7 @@ public sealed class EngineInstaller
                     break;
                 case "nsis":
                     var sevenZip = Archives.SevenZip.Locate()
-                                   ?? throw new InvalidOperationException($"{component.Id} needs Filee's 7-Zip, which is missing.");
+                                   ?? throw new InvalidOperationException($"{component.Id} needs Tulez's 7-Zip, which is missing.");
                     Directory.CreateDirectory(staging);
                     await sevenZip.ExtractAsync(file, staging, [], _root, cancellationToken);
                     TrimTesseract(staging);

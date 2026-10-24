@@ -41,7 +41,7 @@ public class InstallerTests
     [Fact]
     public void Installed_copies_are_recognised_by_their_uninstaller()
     {
-        var folder = Path.Combine(Path.GetTempPath(), "filee-installed-" + Guid.NewGuid().ToString("N")[..8]);
+        var folder = Path.Combine(Path.GetTempPath(), "tulez-installed-" + Guid.NewGuid().ToString("N")[..8]);
         Directory.CreateDirectory(folder);
         try
         {

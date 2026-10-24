@@ -45,7 +45,7 @@ public sealed class SpreadsheetPrintService(IReadOnlyList<IConverter> converters
         if (_pdfMerger is null)
             throw new InvalidOperationException("The PDF merger is not available.");
         var rendered = new List<(string PdfPath, string TemporaryDirectory)>();
-        var temporaryOutput = outputPath + ".filee-tmp";
+        var temporaryOutput = outputPath + ".tulez-tmp";
         try
         {
             for (var index = 0; index < regions.Count; index++)

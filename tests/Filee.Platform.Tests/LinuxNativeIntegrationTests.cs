@@ -14,12 +14,12 @@ public sealed class LinuxNativeIntegrationTests
             Assert.Skip("Requires the Linux POSIX shell.");
             return;
         }
-        var root = Path.Combine(Path.GetTempPath(), "filee-linux-" + Guid.NewGuid().ToString("N"));
+        var root = Path.Combine(Path.GetTempPath(), "tulez-linux-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
         try
         {
             var capture = Path.Combine(root, "arguments");
-            var target = Path.Combine(root, "Filee's app");
+            var target = Path.Combine(root, "Tulez's app");
             File.WriteAllText(target, "#!/bin/sh\nprintf '%s\\0' \"$@\" > " + LinuxDesktopIntegration.ShellArgument(capture) + "\n");
             File.SetUnixFileMode(target, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
             var first = Path.Combine(root, "a", "한글 ' $(touch BAD) %F.txt");
@@ -31,7 +31,7 @@ public sealed class LinuxNativeIntegrationTests
             }
             var data = Path.Combine(root, "data");
             new LinuxDesktopIntegration(Path.Combine(root, "config"), data).SetContextMenu(true, target, "Convert");
-            var processInfo = new ProcessStartInfo(Path.Combine(data, "nautilus", "scripts", "Filee"))
+            var processInfo = new ProcessStartInfo(Path.Combine(data, "nautilus", "scripts", "Tulez"))
             {
                 UseShellExecute = false,
                 WorkingDirectory = root,

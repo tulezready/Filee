@@ -30,7 +30,7 @@ public class PdfPageToolsTests(EngineFixture fx) : IClassFixture<EngineFixture>
         var first = document.AddPage();
         document.AddPage();
         document.Info.Title = "Preserve this title";
-        document.Info.Author = "Filee tests";
+        document.Info.Author = "Tulez tests";
         document.Outlines.Add("First page", first);
         var field = new PdfDictionary(document);
         field.Elements.SetName("/FT", "/Tx");
@@ -63,7 +63,7 @@ public class PdfPageToolsTests(EngineFixture fx) : IClassFixture<EngineFixture>
     {
         using var result = PdfReader.Open(path, PdfDocumentOpenMode.Import);
         Assert.Equal("Preserve this title", result.Info.Title);
-        Assert.Equal("Filee tests", result.Info.Author);
+        Assert.Equal("Tulez tests", result.Info.Author);
         Assert.Equal("First page", Assert.Single(result.Outlines).Title);
         Assert.Equal("form stays", result.AcroForm.Elements.GetString("/FileeFormMarker"));
         Assert.Equal("Customer", Assert.Single(result.AcroForm.Fields.Names));

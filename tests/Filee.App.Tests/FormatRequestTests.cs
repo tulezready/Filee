@@ -12,7 +12,7 @@ namespace Filee.App.Tests;
 [Collection("MainWindow")]
 public sealed class FormatRequestTests : IDisposable
 {
-    private readonly string _folder = Path.Combine(Path.GetTempPath(), "filee-format-request-" + Guid.NewGuid().ToString("N"));
+    private readonly string _folder = Path.Combine(Path.GetTempPath(), "tulez-format-request-" + Guid.NewGuid().ToString("N"));
 
     public FormatRequestTests() => Directory.CreateDirectory(_folder);
 

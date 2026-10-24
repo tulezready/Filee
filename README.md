@@ -1,3 +1,8 @@
+> **Tulez** is a renamed fork of [Filee](https://github.com/KnifeLemon/Filee) by Myeonggu Kim (KnifeLemon) and the
+> Filee contributors, used under the MIT License (see [LICENSE](LICENSE)). Tulez installs, keeps its settings and
+> updates separately from Filee, and gets its updates from [this repository's releases](https://github.com/tulezready/Filee/releases).
+> Windows builds: Actions → **Windows build** → Run workflow. The rest of this README is Filee's.
+
 <p align="center">
   <a href="https://filee.sh"><img src="docs/media/banner-en.jpg" alt="Filee: Drag. Drop. Converted." width="100%"></a>
 </p>

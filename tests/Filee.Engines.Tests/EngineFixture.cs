@@ -18,7 +18,7 @@ public sealed class EngineFixture : IDisposable
         Catalog = new ConverterCatalog(Converters) { Priority = new AppSettings().EnginePriority };
     }
 
-    public string Root { get; } = Path.Combine(Path.GetTempPath(), "filee-engine-tests", Guid.NewGuid().ToString("N")[..8]);
+    public string Root { get; } = Path.Combine(Path.GetTempPath(), "tulez-engine-tests", Guid.NewGuid().ToString("N")[..8]);
     public IReadOnlyList<IConverter> Converters { get; }
     public ConverterCatalog Catalog { get; }
 
@@ -26,7 +26,7 @@ public sealed class EngineFixture : IDisposable
     public async Task<string> MakeHwpxAsync(string folder)
     {
         var txt = Path.Combine(folder, "sample.txt");
-        await File.WriteAllTextAsync(txt, "Filee 한글 문서 테스트\n\n두 번째 문단입니다. 文件转换 Hello");
+        await File.WriteAllTextAsync(txt, "Tulez 한글 문서 테스트\n\n두 번째 문단입니다. 文件转换 Hello");
         var job = await ConvertAsync([txt], new Preset { TargetFormat = "hwpx" });
         Assert.True(job.State == JobState.Completed, string.Join("; ", job.Files.Select(f => $"{f.ErrorKey} {f.ErrorDetail}")));
         return job.Outputs.Single();

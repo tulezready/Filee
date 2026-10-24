@@ -71,7 +71,7 @@ public class GeoCrsTests
         var position = crs.ToLonLat(new Coord(c.X, c.Y));
         if (ShiftedByProj.Contains(code))
         {
-            Assert.True(crs.IsApproximate, "a datum Filee doesn't shift is reported");
+            Assert.True(crs.IsApproximate, "a datum Tulez doesn't shift is reported");
             Assert.InRange(Metres(position.X, position.Y, c.Lon, c.Lat), 0, 300);
             return;
         }
@@ -177,7 +177,7 @@ public class GeoCrsTests
     [InlineData("GEOGCS[\"unclosed\"", "missing closing bracket")]
     [InlineData("GEOGCS[\"unterminated string]", "missing closing quote")]
     [InlineData("", "empty definition")]
-    public void A_system_Filee_cannot_convert_is_refused_with_its_name(string wkt, string expectedInDetail)
+    public void A_system_Tulez_cannot_convert_is_refused_with_its_name(string wkt, string expectedInDetail)
     {
         var error = Assert.Throws<ConversionRefusedException>(() => GeoCrs.FromWkt(wkt));
         Assert.Equal("error.geo_unsupported_crs", error.ErrorKey);

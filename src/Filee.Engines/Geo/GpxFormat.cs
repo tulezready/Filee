@@ -98,7 +98,7 @@ internal static class GpxFormat
         writer.WriteStartDocument();
         writer.WriteStartElement("gpx", Gpx.NamespaceName);
         writer.WriteAttributeString("version", "1.1");
-        writer.WriteAttributeString("creator", "Filee");
+        writer.WriteAttributeString("creator", "Tulez");
         foreach (var feature in dataset.Features)
         {
             cancellationToken.ThrowIfCancellationRequested();

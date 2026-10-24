@@ -23,7 +23,7 @@ public class RecentConversionTests
     [AvaloniaFact]
     public void A_picture_becomes_an_upright_square_and_the_file_stays_free()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-thumbs-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-thumbs-").FullName;
         try
         {
             // Wide: red on the left, blue on the right. The middle square keeps a bit of both.
@@ -56,7 +56,7 @@ public class RecentConversionTests
     [AvaloniaFact]
     public void A_photo_turned_by_its_exif_orientation_shows_upright()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-thumbs-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-thumbs-").FullName;
         try
         {
             // Stored on its side (red left, blue right) with orientation 6: shown turned a quarter clockwise, red on top.
@@ -76,7 +76,7 @@ public class RecentConversionTests
     [AvaloniaFact]
     public void Only_a_picture_that_fits_the_budget_is_decoded()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-thumbs-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-thumbs-").FullName;
         try
         {
             // A PNG decodes whole: past the budget it shows its format instead.
@@ -118,7 +118,7 @@ public class RecentConversionTests
         var tools = Filee.Engines.Media.FfmpegConverter.Locate();
         Assert.SkipUnless(tools is not null, "FFmpeg is not installed (pwsh build/fetch-engines.ps1 -Only ffmpeg)");
 
-        var folder = Directory.CreateTempSubdirectory("filee-videothumbs-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-videothumbs-").FullName;
         try
         {
             var video = Path.Combine(folder, "sample.mp4");
@@ -162,7 +162,7 @@ public class RecentConversionTests
         var tools = Filee.Engines.Media.FfmpegConverter.Locate();
         Assert.SkipUnless(tools is not null, "FFmpeg is not installed (pwsh build/fetch-engines.ps1 -Only ffmpeg)");
 
-        var folder = Directory.CreateTempSubdirectory("filee-videoshort-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-videoshort-").FullName;
         try
         {
             var video = Path.Combine(folder, "short.mp4");
@@ -207,7 +207,7 @@ public class RecentConversionTests
     {
         TestServices.EnsureInitialized("en");
         var loc = AppHost.Get<ILocalizer>();
-        var folder = Directory.CreateTempSubdirectory("filee-open-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-open-").FullName;
         try
         {
             var picture = Path.Combine(folder, "photo.png");
@@ -261,7 +261,7 @@ public class RecentConversionTests
         TestServices.EnsureInitialized(language);
         var store = AppHost.Get<UserDataStore>();
         var theme = AppHost.Get<ThemeService>();
-        var folder = Directory.CreateTempSubdirectory("filee-home-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-home-").FullName;
         store.ClearHistory();
         try
         {

@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-  Signs Windows programs with Filee's code signing certificate: Authenticode, SHA-256, with a timestamp from Certum.
+  Signs Windows programs with Tulez's code signing certificate: Authenticode, SHA-256, with a timestamp from Certum.
 
 .DESCRIPTION
-  Signs every .exe and .dll under -Path (files or folders) that has no valid signature yet: Filee's own programs, and
+  Signs every .exe and .dll under -Path (files or folders) that has no valid signature yet: Tulez's own programs, and
   the bundled ones that come unsigned (rhwp, 7-Zip, most NuGet libraries). Files their makers signed (.NET, Microsoft,
   ImageMagick …) keep their signature. Afterwards every program under -Path must have a valid signature.
 
@@ -13,7 +13,7 @@
 
 .PARAMETER CertificateThumbprint
   SHA-1 thumbprint of the certificate ("Cert Hash(sha1)" in certutil -user -store My). Defaults to
-  $env:FILEE_SIGNING_CERT.
+  $env:TULEZ_SIGNING_CERT.
 
 .EXAMPLE
   pwsh build/sign-windows.ps1 -Path publish\win-x64 -CertificateThumbprint <sha1>
@@ -22,12 +22,12 @@
 param(
     [Parameter(Mandatory)]
     [string[]]$Path,
-    [string]$CertificateThumbprint = $env:FILEE_SIGNING_CERT
+    [string]$CertificateThumbprint = $env:TULEZ_SIGNING_CERT
 )
 
 $ErrorActionPreference = 'Stop'
 if (-not $IsWindows) { throw 'Authenticode signing needs Windows.' }
-if (-not $CertificateThumbprint) { throw 'Pass -CertificateThumbprint or set FILEE_SIGNING_CERT.' }
+if (-not $CertificateThumbprint) { throw 'Pass -CertificateThumbprint or set TULEZ_SIGNING_CERT.' }
 $CertificateThumbprint = $CertificateThumbprint -replace '\s', ''
 
 $certificate = Get-Item "Cert:\CurrentUser\My\$CertificateThumbprint" -ErrorAction SilentlyContinue
@@ -80,7 +80,7 @@ Write-Host "sign $($unsigned.Count) of $($programs.Count) programs (the others a
 # Several files per signtool run: each one is still signed in the cloud, but the session is opened once.
 $batch = 40
 $options = @('sign', '/sha1', $CertificateThumbprint, '/fd', 'sha256', '/tr', 'http://time.certum.pl', '/td', 'sha256',
-    '/d', 'Filee', '/du', 'https://filee.sh', '/q')
+    '/d', 'Tulez', '/du', 'https://github.com/tulezready/Filee', '/q')
 for ($i = 0; $i -lt $unsigned.Count; $i += $batch) {
     $files = @($unsigned[$i..([Math]::Min($i + $batch, $unsigned.Count) - 1)])
     & $signtool @options @files

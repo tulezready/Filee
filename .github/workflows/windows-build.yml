@@ -1,13 +1,24 @@
 # Builds the unsigned Windows installer and portable zip and keeps them as a downloadable artifact.
-# Same packaging as release.yml (build/build-installer.ps1), without the tests, signing or a GitHub release.
-# Run it from the Actions tab (Windows build > Run workflow).
+# Same packaging as release.yml (build/build-installer.ps1), without the tests or signing.
+# Run it from the Actions tab (Windows build > Run workflow). With "Publish a release" it also creates the GitHub
+# release v<version> with the installer, the zip and SHA256SUMS: Tulez's updater offers that release to installed
+# copies older than it (it checks the files against SHA256SUMS).
 name: Windows build
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version, e.g. 2.0.1 (empty uses Directory.Build.props)'
+        type: string
+        required: false
+      publish:
+        description: 'Publish a release on this repository'
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   windows:
@@ -19,6 +30,17 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
+
+      - name: Version
+        id: version
+        shell: pwsh
+        run: |
+          $version = '${{ inputs.version }}'.Trim().TrimStart('v')
+          if (-not $version) {
+            $version = ([xml](Get-Content Directory.Build.props)).Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
+          }
+          if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "Version '$version' is not like 2.0.1" }
+          "value=$version" >> $env:GITHUB_OUTPUT
 
       # The app embeds the Noto fonts.
       - name: Fonts
@@ -33,11 +55,23 @@ jobs:
 
       - name: Build installer and portable zip
         shell: pwsh
-        run: ./build/build-installer.ps1 -Portable
+        run: ./build/build-installer.ps1 -Version ${{ steps.version.outputs.value }} -Portable
 
       - uses: actions/upload-artifact@v7
         with:
-          name: filee-windows
+          name: tulez-windows
           path: Releases/
           if-no-files-found: error
           retention-days: 30
+
+      - name: Publish the release
+        if: ${{ inputs.publish }}
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $version = '${{ steps.version.outputs.value }}'
+          $files = Get-ChildItem Releases -File -Filter "Tulez-$version-*" | ForEach-Object FullName
+          if (-not $files) { throw "No Tulez-$version-* files in Releases" }
+          gh release create "v$version" --target '${{ github.sha }}' --title "Tulez $version" `
+            --notes "Unsigned Windows build of Tulez $version (based on Filee by KnifeLemon). Windows SmartScreen asks once: More info, then Run anyway." @files

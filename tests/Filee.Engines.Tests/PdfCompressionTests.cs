@@ -244,9 +244,9 @@ public class PdfCompressionTests(EngineFixture fx) : IClassFixture<EngineFixture
         var source = ReportPdf(dir);
         using (var document = PdfReader.Open(source, PdfDocumentOpenMode.Modify))
         {
-            document.Pages[0].Elements["/Metadata"] = Xmp(document, "filee-page-xmp").Reference;
+            document.Pages[0].Elements["/Metadata"] = Xmp(document, "tulez-page-xmp").Reference;
             // A large packet, as image editors leave them: PDFsharp writes the document's XMP afresh, so the old one goes.
-            document.Internals.Catalog.Elements["/Metadata"] = Xmp(document, "filee-document-xmp" + new string(' ', 20_000)).Reference;
+            document.Internals.Catalog.Elements["/Metadata"] = Xmp(document, "tulez-document-xmp" + new string(' ', 20_000)).Reference;
             document.Save(source);
         }
 
@@ -258,10 +258,10 @@ public class PdfCompressionTests(EngineFixture fx) : IClassFixture<EngineFixture
 
         AssertDone(keep);
         AssertDone(dropped);
-        Assert.Contains("filee-page-xmp", Latin1(keep.Outputs.Single()));
-        Assert.DoesNotContain("filee-page-xmp", Latin1(dropped.Outputs.Single()));
-        Assert.DoesNotContain("filee-document-xmp", Latin1(keep.Outputs.Single()));
-        Assert.DoesNotContain("filee-document-xmp", Latin1(dropped.Outputs.Single()));
+        Assert.Contains("tulez-page-xmp", Latin1(keep.Outputs.Single()));
+        Assert.DoesNotContain("tulez-page-xmp", Latin1(dropped.Outputs.Single()));
+        Assert.DoesNotContain("tulez-document-xmp", Latin1(keep.Outputs.Single()));
+        Assert.DoesNotContain("tulez-document-xmp", Latin1(dropped.Outputs.Single()));
 
         static PdfDictionary Xmp(PdfDocument document, string text)
         {

@@ -4,7 +4,7 @@ namespace Filee.Core.Tests;
 
 public class ShortcutResolutionTests
 {
-    private static readonly string Folder = Path.Combine(Path.GetTempPath(), "filee-shortcuts");
+    private static readonly string Folder = Path.Combine(Path.GetTempPath(), "tulez-shortcuts");
     private static readonly string Report = Path.Combine(Folder, "report.docx");
     private static readonly string Photo = Path.Combine(Folder, "photo.jpg");
     private static readonly string ToReport = Path.Combine(Folder, "report.lnk");

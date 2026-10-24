@@ -302,7 +302,7 @@ public class ICalendarTests(EngineFixture fx) : IClassFixture<EngineFixture>
         var after = DateTime.UtcNow.AddSeconds(1);
         Assert.False(bytes is [0xEF, 0xBB, 0xBF, ..]);
         var text = Encoding.UTF8.GetString(bytes);
-        Assert.StartsWith("BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Filee//Filee//EN\r\n", text);
+        Assert.StartsWith("BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Tulez//Tulez//EN\r\n", text);
         Assert.Contains("BEGIN:VTIMEZONE\r\nTZID:Asia/Seoul\r\n", text);
         Assert.Contains("TZOFFSETFROM:+0900\r\nTZOFFSETTO:+0900", text);
         Assert.Contains("SUMMARY:제목\\, 쉼표\\; 역슬래시\\\\ 줄\\n둘", text);
@@ -378,7 +378,7 @@ public class ICalendarTests(EngineFixture fx) : IClassFixture<EngineFixture>
         var text = (await File.ReadAllTextAsync(await Convert(Csv(["Title", "Start", "UID"],
             ["Safe", "2026-10-21", uid]), "csv", "ics"), TestContext.Current.CancellationToken))
             .Replace("\r\n ", "");
-        Assert.Matches(@"(?m)^UID:[0-9a-f]{16}@filee\r?$", text);
+        Assert.Matches(@"(?m)^UID:[0-9a-f]{16}@tulez\r?$", text);
         Assert.Contains("SUMMARY:Safe\r\nDTSTART;VALUE=DATE:20261021", text);
         Assert.Equal(1, text.Split("BEGIN:VEVENT").Length - 1);
     }
@@ -519,7 +519,7 @@ public class ICalendarTests(EngineFixture fx) : IClassFixture<EngineFixture>
         var path = await Convert(Csv([ICalendar.Columns, .. rows]), "csv", "ics");
         var back = await ReadCalendar(await File.ReadAllTextAsync(path, TestContext.Current.CancellationToken));
         Assert.Equal(8, back.Count);
-        Assert.EndsWith("@filee", Cell(back, 1, "UID"));
+        Assert.EndsWith("@tulez", Cell(back, 1, "UID"));
         Assert.Equal("", Cell(back, 2, "End"));
         Assert.Equal("2026-10-21T10:00:00+09:00", Cell(back, 3, "End"));
         Assert.Equal("2026-11-01T01:30:00-05:00", Cell(back, 4, "Start"));

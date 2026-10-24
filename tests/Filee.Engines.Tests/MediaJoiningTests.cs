@@ -150,7 +150,7 @@ public class MediaJoiningTests
     [Fact]
     public void A_long_graph_goes_into_a_file()
     {
-        var work = Path.Combine(Path.GetTempPath(), "filee-tests", Guid.NewGuid().ToString("N")[..8]);
+        var work = Path.Combine(Path.GetTempPath(), "tulez-tests", Guid.NewGuid().ToString("N")[..8]);
         try
         {
             var slides = Enumerable.Range(1, 100).Select(i => $"{i}.jpg").ToList();

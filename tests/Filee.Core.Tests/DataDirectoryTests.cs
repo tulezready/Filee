@@ -19,7 +19,7 @@ public class DataDirectoryTests
 
             Environment.SetEnvironmentVariable(UserDataStore.DirectoryVariable, null);
             Assert.Null(UserDataStore.OverrideDirectory);
-            Assert.Equal(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Filee"),
+            Assert.Equal(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Tulez"),
                 UserDataStore.DefaultDirectory);
         }
         finally
@@ -36,5 +36,5 @@ public class DataDirectoryTests
 
     [Fact]
     public void A_relative_folder_is_made_absolute() =>
-        Assert.Equal(Path.Combine(Environment.CurrentDirectory, "filee-test"), UserDataStore.DirectoryFrom("filee-test"));
+        Assert.Equal(Path.Combine(Environment.CurrentDirectory, "tulez-test"), UserDataStore.DirectoryFrom("tulez-test"));
 }

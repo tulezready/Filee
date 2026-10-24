@@ -16,7 +16,7 @@ public class SpreadsheetPrintPlanTests
     [Fact]
     public void Inspector_reads_real_content_and_the_workbooks_print_settings()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-print-plan-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-print-plan-").FullName;
         try
         {
             var builder = new XlsxBuilder();
@@ -57,7 +57,7 @@ public class SpreadsheetPrintPlanTests
     [Fact]
     public void Temporary_copy_changes_only_the_chosen_regions_print_layout()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-print-copy-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-print-copy-").FullName;
         try
         {
             var builder = new XlsxBuilder();
@@ -145,7 +145,7 @@ public class SpreadsheetPrintPlanTests
     [Fact]
     public void Temporary_copy_keeps_cross_sheet_formulas_and_named_ranges()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-print-formula-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-print-formula-").FullName;
         try
         {
             var builder = new XlsxBuilder();
@@ -185,7 +185,7 @@ public class SpreadsheetPrintPlanTests
     [Fact]
     public void Inspector_handles_a_comma_in_the_sheet_name()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-print-comma-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-print-comma-").FullName;
         try
         {
             var builder = new XlsxBuilder();
@@ -204,7 +204,7 @@ public class SpreadsheetPrintPlanTests
     [Fact]
     public async Task LibreOffice_round_trip_recalculates_a_cross_sheet_named_formula()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-print-lo-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-print-lo-").FullName;
         try
         {
             var libreOffice = new LibreOfficeConverter(new EngineEnvironment(Path.Combine(folder, "data")));
@@ -239,7 +239,7 @@ public class SpreadsheetPrintPlanTests
     [Fact]
     public void Pdf_preview_preserves_the_page_shape()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-sheet-preview-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-sheet-preview-").FullName;
         try
         {
             var path = Path.Combine(folder, "mixed.pdf");

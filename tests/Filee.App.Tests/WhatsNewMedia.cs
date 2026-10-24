@@ -103,7 +103,7 @@ public class WhatsNewMedia
     {
         var clip = new Clip();
         // Where a browser picture stands before it is saved (BrowserDrags: placeholder paths named like the file).
-        var (window, vm) = OpenDonut([Path.Combine(Path.GetTempPath(), "Filee", "web", "drop", "1", "sunset.jpg")], clickMode: false);
+        var (window, vm) = OpenDonut([Path.Combine(Path.GetTempPath(), "Tulez", "web", "drop", "1", "sunset.jpg")], clickMode: false);
         var donut = window.DonutControl;
         var badge = window.GetVisualDescendants().OfType<Border>().Single(b => b.Name == "DownloadBadge");
         var badgeText = (TextBlock)badge.Child!;
@@ -241,7 +241,7 @@ public class WhatsNewMedia
     private static Clip Crop()
     {
         var clip = new Clip { Quality = 72 };
-        var folder = Directory.CreateTempSubdirectory("filee-whatsnew-crop-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-whatsnew-crop-").FullName;
         var clock = System.Diagnostics.Stopwatch.GetTimestamp();
         CropCanvas.Clock = () => clock;
         // Crop on the donut's front (it ships on the back face, where Tab turns the donut): one drop in a short clip.
@@ -998,7 +998,7 @@ public class WhatsNewMedia
     /// </summary>
     private static void Write(string folder, string name, Func<Clip> render, bool onRequestOnly = false)
     {
-        var only = Environment.GetEnvironmentVariable("FILEE_WHATSNEW_ONLY");
+        var only = Environment.GetEnvironmentVariable("TULEZ_WHATSNEW_ONLY");
         var named = !string.IsNullOrWhiteSpace(only)
                     && only.Split(',', StringSplitOptions.TrimEntries).Contains(Path.GetFileNameWithoutExtension(name), StringComparer.OrdinalIgnoreCase);
         if (onRequestOnly ? !named : !string.IsNullOrWhiteSpace(only) && !named)

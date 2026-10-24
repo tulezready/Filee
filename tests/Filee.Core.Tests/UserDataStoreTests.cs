@@ -95,7 +95,7 @@ public class UserDataStoreTests
     }
 
     [Fact]
-    public void A_kind_from_a_newer_Filee_reads_as_a_group_and_the_other_presets_still_load()
+    public void A_kind_from_a_newer_Tulez_reads_as_a_group_and_the_other_presets_still_load()
     {
         using var dir = new TempDir();
         var store = new UserDataStore(dir.Path);
@@ -116,7 +116,7 @@ public class UserDataStoreTests
     }
 
     [Fact]
-    public void A_group_saved_by_a_Filee_from_before_groups_is_still_a_group()
+    public void A_group_saved_by_a_Tulez_from_before_groups_is_still_a_group()
     {
         using var dir = new TempDir();
         var store = new UserDataStore(dir.Path);
@@ -226,7 +226,7 @@ public class UserDataStoreTests
     }
 
     [Fact]
-    public void Older_Filee_round_trip_restores_missing_icon_defaults()
+    public void Older_Tulez_round_trip_restores_missing_icon_defaults()
     {
         using var dir = new TempDir();
         var store = new UserDataStore(dir.Path);
@@ -1291,7 +1291,7 @@ public class UserDataStoreTests
     }
 
     [Fact]
-    public void The_close_action_is_saved_and_one_from_a_newer_Filee_reads_as_ask()
+    public void The_close_action_is_saved_and_one_from_a_newer_Tulez_reads_as_ask()
     {
         using var dir = new TempDir();
         var store = new UserDataStore(dir.Path);
@@ -1315,7 +1315,7 @@ public class UserDataStoreTests
     }
 
     [Fact]
-    public void A_rotation_from_a_newer_Filee_reads_as_none_and_the_other_presets_still_load()
+    public void A_rotation_from_a_newer_Tulez_reads_as_none_and_the_other_presets_still_load()
     {
         using var dir = new TempDir();
         var store = new UserDataStore(dir.Path);
@@ -1337,7 +1337,7 @@ public class UserDataStoreTests
     }
 
     [Fact]
-    public void Back_from_an_older_Filee_rotate_and_flip_work_again_and_keep_the_users_changes()
+    public void Back_from_an_older_Tulez_rotate_and_flip_work_again_and_keep_the_users_changes()
     {
         // What a Filee before 17 leaves after saving: kind, members and rotation dropped, the rest as it was.
         var presets = BuiltInData.CreatePresets();
@@ -1425,7 +1425,7 @@ public class UserDataStoreTests
     }
 
     [Fact]
-    public void Back_from_an_older_Filee_tool_crop_works_again_and_keeps_the_users_changes()
+    public void Back_from_an_older_Tulez_tool_crop_works_again_and_keeps_the_users_changes()
     {
         // What a Filee before 26 leaves after saving: kind read as Group, TargetFormat dropped, SubPresetIds empty, the rest as it was.
         var presets = BuiltInData.CreatePresets();
@@ -1445,7 +1445,7 @@ public class UserDataStoreTests
     }
 
     [Fact]
-    public void Back_from_an_older_Filee_compress_pdf_compresses_again_and_keeps_the_users_changes()
+    public void Back_from_an_older_Tulez_compress_pdf_compresses_again_and_keeps_the_users_changes()
     {
         // What a Filee before 20 leaves after saving: the compression level dropped, the rest as it was.
         var presets = BuiltInData.CreatePresets();

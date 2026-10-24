@@ -4,10 +4,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <AssemblyName>Filee</AssemblyName>
+    <AssemblyName>Tulez</AssemblyName>
     <RootNamespace>Filee.App</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>Assets\Icons\filee.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\Icons\tulez.ico</ApplicationIcon>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
@@ -37,7 +37,7 @@
 
   <PropertyGroup>
     <FileeNativeWayland Condition="$(RuntimeIdentifier.StartsWith('linux')) Or ('$(RuntimeIdentifier)' == '' And $([MSBuild]::IsOSPlatform('Linux')))">true</FileeNativeWayland>
-    <DefineConstants Condition="'$(FileeNativeWayland)' == 'true'">$(DefineConstants);FILEE_NATIVE_WAYLAND</DefineConstants>
+    <DefineConstants Condition="'$(FileeNativeWayland)' == 'true'">$(DefineConstants);TULEZ_NATIVE_WAYLAND</DefineConstants>
   </PropertyGroup>
 
   <!-- Linux-only Wayland packages to keep Windows and macOS binaries small -->
