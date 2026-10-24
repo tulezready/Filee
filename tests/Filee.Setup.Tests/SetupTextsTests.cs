@@ -23,7 +23,7 @@ public partial class SetupTextsTests
     }
 
     [Fact]
-    public void Setup_offers_every_language_filee_has()
+    public void Setup_offers_every_language_tulez_has()
     {
         Assert.Equal(LocalizationService.Languages.Select(l => (l.Code, l.NativeName)), SetupTexts.Languages);
         Assert.Contains(SetupTexts.Languages, l => l.Code == "ja");

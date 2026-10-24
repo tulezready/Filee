@@ -103,7 +103,7 @@ public class ListSearchTests
     }
 
     [Fact]
-    public void Running_app_names_leave_out_filee_itself()
+    public void Running_app_names_leave_out_tulez_itself()
     {
         var own = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
         Assert.Equal(["a", "B"], IPlatformServices.AppNames(["B", own, "a", "", null, "b"]));

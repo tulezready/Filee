@@ -173,7 +173,7 @@ public class WebDropJobTests
                 Halfway.TrySetResult();
             await Go.Task.WaitAsync(cancellationToken);
             progress.Report(new TransferProgress(size ?? 2000, size));
-            var path = Path.Combine(Path.GetTempPath(), "filee-tests", Guid.NewGuid().ToString("N")[..8], Path.GetFileName(source));
+            var path = Path.Combine(Path.GetTempPath(), "tulez-tests", Guid.NewGuid().ToString("N")[..8], Path.GetFileName(source));
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             await File.WriteAllBytesAsync(path, Png, cancellationToken);
             return path;

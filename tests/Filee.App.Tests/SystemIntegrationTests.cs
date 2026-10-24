@@ -77,7 +77,7 @@ public sealed class SystemIntegrationTests
         {
             RegistrationEnabled = true,
             SeparateDataDirectory = true,
-            ExecutablePath = Path.Combine(Path.GetTempPath(), "Filee test", "Filee"),
+            ExecutablePath = Path.Combine(Path.GetTempPath(), "Tulez test", "Tulez"),
         };
         service.Apply(new AppSettings { StartWithSystem = true, ContextMenuEnabled = true });
         Assert.Equal(0, platform.StartupCalls);
@@ -89,7 +89,7 @@ public sealed class SystemIntegrationTests
         {
             RegistrationEnabled = true,
             SeparateDataDirectory = false,
-            ExecutablePath = Path.Combine(Path.GetTempPath(), "Filee test", "Filee"),
+            ExecutablePath = Path.Combine(Path.GetTempPath(), "Tulez test", "Tulez"),
         };
 
     private sealed class Texts : ILocalizer

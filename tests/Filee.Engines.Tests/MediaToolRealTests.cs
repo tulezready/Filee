@@ -387,7 +387,7 @@ public class MediaToolRealTests(EngineFixture fx) : IClassFixture<EngineFixture>
         using (var image = new MagickImage("gradient:#7F77DD-#1D9E75", 400, 300))
         {
             var exif = new ExifProfile();
-            exif.SetValue(ExifTag.Make, "Filee Camera");
+            exif.SetValue(ExifTag.Make, "Tulez Camera");
             exif.SetValue(ExifTag.DateTimeOriginal, "2020:05:01 10:00:00");
             exif.SetValue(ExifTag.GPSLatitudeRef, "N");
             image.SetProfile(exif);
@@ -406,7 +406,7 @@ public class MediaToolRealTests(EngineFixture fx) : IClassFixture<EngineFixture>
         Assert.Equal((400u, 300u), (clean.Width, clean.Height));
         Assert.InRange(clean.Quality, 78u, 82u); // saved at the photo's own quality, not above it
         var bytes = Encoding.Latin1.GetString(await File.ReadAllBytesAsync(output, TestContext.Current.CancellationToken));
-        Assert.DoesNotContain("Filee Camera", bytes);
+        Assert.DoesNotContain("Tulez Camera", bytes);
         Assert.DoesNotContain("Jane", bytes);
     }
 

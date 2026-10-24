@@ -57,7 +57,7 @@ public class FitsFormatTests
 
         Assert.True(old.Image.FitsDebayer);
         Assert.Equal(FitsTiffMode.Linear, old.Image.FitsTiff);
-        Assert.Equal(FitsTiffMode.Linear, newer.Image.FitsTiff); // a mode from a newer Filee
+        Assert.Equal(FitsTiffMode.Linear, newer.Image.FitsTiff); // a mode from a newer Tulez
         var stretched = new ImageOptions { FitsTiff = FitsTiffMode.Stretched, FitsDebayer = false }.Clone();
         Assert.Equal((FitsTiffMode.Stretched, false), (stretched.FitsTiff, stretched.FitsDebayer));
     }

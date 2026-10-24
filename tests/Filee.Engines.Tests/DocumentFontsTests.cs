@@ -75,7 +75,7 @@ public class DocumentFontsTests
     [Fact]
     public void Preflight_skips_legacy_formats_and_fails_open_on_any_metadata_error()
     {
-        var legacy = Path.Combine(Path.GetTempPath(), $"filee-fonts-{Guid.NewGuid():N}.doc");
+        var legacy = Path.Combine(Path.GetTempPath(), $"tulez-fonts-{Guid.NewGuid():N}.doc");
         var malformed = Package(new Dictionary<string, string> { ["word/styles.xml"] = "<root><rFonts" });
         var readable = Package(new Dictionary<string, string>
         {
@@ -94,7 +94,7 @@ public class DocumentFontsTests
 
     private static string Package(IReadOnlyDictionary<string, string> entries)
     {
-        var path = Path.Combine(Path.GetTempPath(), $"filee-document-fonts-{Guid.NewGuid():N}.zip");
+        var path = Path.Combine(Path.GetTempPath(), $"tulez-document-fonts-{Guid.NewGuid():N}.zip");
         using var zip = ZipFile.Open(path, ZipArchiveMode.Create);
         foreach (var (name, xml) in entries)
         {

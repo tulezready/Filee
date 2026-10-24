@@ -142,7 +142,7 @@ public class CloseActionTests
             NullLogger<GeneralPageViewModel>.Instance);
         try
         {
-            Assert.Equal(["Ask every time", "Keep Filee running in the tray", "Quit Filee"], page.CloseChoices.Select(c => c.Label));
+            Assert.Equal(["Ask every time", "Keep Tulez running in the tray", "Quit Tulez"], page.CloseChoices.Select(c => c.Label));
             page.CloseChoice = page.CloseChoices.Single(c => c.Value == CloseAction.Quit);
             Assert.Equal(CloseAction.Quit, store.Settings.CloseAction);
         }
@@ -156,7 +156,7 @@ public class CloseActionTests
     public void The_general_page_saves_each_icon_preference_without_changing_close_action()
     {
         TestServices.EnsureInitialized("en");
-        var directory = Directory.CreateTempSubdirectory("filee-icons-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-icons-").FullName;
         try
         {
             var store = new UserDataStore(directory);
@@ -208,7 +208,7 @@ public class CloseActionTests
     public void Rejected_dock_policy_keeps_preference_and_switch_in_sync()
     {
         TestServices.EnsureInitialized("en");
-        var directory = Directory.CreateTempSubdirectory("filee-icons-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-icons-").FullName;
         try
         {
             var store = new UserDataStore(directory);
@@ -256,7 +256,7 @@ public class CloseActionTests
     public void Toggle_switch_reverts_on_rejected_dock_change_with_real_view()
     {
         TestServices.EnsureInitialized("en");
-        var directory = Directory.CreateTempSubdirectory("filee-icons-real-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-icons-real-").FullName;
         try
         {
             var store = new UserDataStore(directory);

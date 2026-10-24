@@ -34,7 +34,7 @@ public class MergeOrderTests
     public async Task Donut_merge_waits_for_review_and_uses_the_chosen_order_or_cancels(bool cancel)
     {
         TestServices.EnsureInitialized();
-        var folder = Directory.CreateTempSubdirectory("filee-merge-order-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-merge-order-").FullName;
         var store = AppHost.Get<UserDataStore>();
         var profile = store.Profiles.Single(p => p.Id == "pdf");
         var previous = profile.PresetIds;
@@ -168,7 +168,7 @@ public class MergeOrderTests
     [Fact]
     public void Files_start_in_name_order_counting_numbers_and_browser_files_show_no_folder()
     {
-        var root = Path.Combine(Path.GetTempPath(), "filee-merge-names");
+        var root = Path.Combine(Path.GetTempPath(), "tulez-merge-names");
         string In(string folder, string name) => Path.Combine(root, folder, name);
         var browser = Path.Combine(Filee.Core.Web.WebDrop.DefaultWorkRoot, "abc", "drop", "1", "page 1.pdf");
         var vm = new MergeOrderViewModel([In("b", "page 10.pdf"), In("a", "page 2.pdf"), browser, In("a", "page 10.pdf")]);

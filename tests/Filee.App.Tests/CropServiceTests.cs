@@ -30,7 +30,7 @@ public class CropServiceTests
     public async Task CropFileAsync_resolves_output_path_and_crops_image()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-crop-test-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-crop-test-").FullName;
         try
         {
             var source = CreateTestImage(folder, "photo.png", 200, 100);
@@ -59,7 +59,7 @@ public class CropServiceTests
     public async Task Pdf_preview_and_crop_keep_every_page_as_a_PDF()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-pdf-crop-test-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-pdf-crop-test-").FullName;
         try
         {
             var source = Path.Combine(folder, "pages.pdf");
@@ -101,7 +101,7 @@ public class CropServiceTests
     public async Task CropFileAsync_honors_conflict_policies()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-crop-conflict-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-crop-conflict-").FullName;
         try
         {
             var source = CreateTestImage(folder, "sample.png", 100, 100);
@@ -150,7 +150,7 @@ public class CropServiceTests
     public async Task CropFileAsync_keeps_the_sources_quality()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-crop-quality-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-crop-quality-").FullName;
         try
         {
             var store = AppHost.Get<UserDataStore>();
@@ -198,7 +198,7 @@ public class CropServiceTests
     public async Task An_only_file_that_cant_be_cropped_keeps_the_overlay_open_with_the_reason_and_no_retry()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-crop-animated-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-crop-animated-").FullName;
         try
         {
             var store = AppHost.Get<UserDataStore>();
@@ -239,7 +239,7 @@ public class CropServiceTests
     public async Task A_file_skipped_because_the_output_exists_is_shown_but_isnt_a_failure()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-crop-skip-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-crop-skip-").FullName;
         try
         {
             var store = AppHost.Get<UserDataStore>();

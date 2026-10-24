@@ -17,7 +17,7 @@ public class NativeMemoryStressTests(EngineFixture fx) : IClassFixture<EngineFix
     private const int Workers = 3;
 
     private static TimeSpan Duration =>
-        TimeSpan.FromSeconds(int.TryParse(Environment.GetEnvironmentVariable("FILEE_STRESS_SECONDS"), out var s) && s > 0 ? s : 6);
+        TimeSpan.FromSeconds(int.TryParse(Environment.GetEnvironmentVariable("TULEZ_STRESS_SECONDS"), out var s) && s > 0 ? s : 6);
 
     [Fact]
     public async Task Native_conversions_survive_a_compacting_collector_and_cache_releases()

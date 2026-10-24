@@ -7,8 +7,8 @@ namespace Filee.Cli.Tests;
 
 public sealed class CliTests : IDisposable
 {
-    private readonly string _folder = Directory.CreateTempSubdirectory("filee-cli-").FullName;
-    private readonly string _settings = Directory.CreateTempSubdirectory("filee-cli-settings-").FullName;
+    private readonly string _folder = Directory.CreateTempSubdirectory("tulez-cli-").FullName;
+    private readonly string _settings = Directory.CreateTempSubdirectory("tulez-cli-settings-").FullName;
 
     public void Dispose()
     {
@@ -115,7 +115,7 @@ public sealed class CliTests : IDisposable
     }
 
     [Fact]
-    public async Task A_folder_converts_the_files_filee_knows()
+    public async Task A_folder_converts_the_files_tulez_knows()
     {
         Png("a.png");
         File.WriteAllText(Path.Combine(_folder, "notes.unknownformat"), "x");
@@ -303,13 +303,13 @@ public sealed class CliTests : IDisposable
     public async Task Data_files_convert_to_each_other()
     {
         var json = Path.Combine(_folder, "config.json");
-        await File.WriteAllTextAsync(json, """{"name": "Filee", "ports": [80, 443]}""", TestContext.Current.CancellationToken);
+        await File.WriteAllTextAsync(json, """{"name": "Tulez", "ports": [80, 443]}""", TestContext.Current.CancellationToken);
 
         var (code, output, errors) = await Run("convert", json, "--to", "yaml");
 
         Assert.Equal(Cli.Success, code);
         Assert.Equal("", errors);
-        Assert.Equal("name: Filee\nports:\n  - 80\n  - 443\n", await File.ReadAllTextAsync(Path.Combine(_folder, "config.yaml"), TestContext.Current.CancellationToken));
+        Assert.Equal("name: Tulez\nports:\n  - 80\n  - 443\n", await File.ReadAllTextAsync(Path.Combine(_folder, "config.yaml"), TestContext.Current.CancellationToken));
 
         (code, output, _) = await Run("formats", "json");
         Assert.Equal(Cli.Success, code);
@@ -325,7 +325,7 @@ public sealed class CliTests : IDisposable
 
         (code, output, _) = await Run("--version");
         Assert.Equal(Cli.Success, code);
-        Assert.StartsWith("filee ", output);
+        Assert.StartsWith("tulez ", output);
     }
 
     [Fact]

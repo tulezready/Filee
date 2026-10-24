@@ -248,12 +248,12 @@ public sealed class LibreOfficeConverter : IConverter
                 if (IsPrepared(slot))
                     continue;
 
-                var folder = Path.Combine(Path.GetTempPath(), "filee-warmup-" + Guid.NewGuid().ToString("N")[..8]);
+                var folder = Path.Combine(Path.GetTempPath(), "tulez-warmup-" + Guid.NewGuid().ToString("N")[..8]);
                 try
                 {
                     Directory.CreateDirectory(folder);
                     var input = Path.Combine(folder, "warmup.txt");
-                    await File.WriteAllTextAsync(input, "Filee", cancellationToken);
+                    await File.WriteAllTextAsync(input, "Tulez", cancellationToken);
                     await RunAsync(soffice, slot, FilterFor("txt", "pdf", pdfA: false), folder, input, cancellationToken);
                     prepared++;
                 }

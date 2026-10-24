@@ -14,7 +14,7 @@ public sealed class FileLoggerProvider : ILoggerProvider
     {
         _directory = directory;
         Directory.CreateDirectory(directory);
-        foreach (var old in Directory.EnumerateFiles(directory, "filee-*.log")
+        foreach (var old in Directory.EnumerateFiles(directory, "tulez-*.log")
                      .Where(f => File.GetLastWriteTime(f) < DateTime.Now.AddDays(-7)))
         {
             try { File.Delete(old); } catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { }
@@ -31,7 +31,7 @@ public sealed class FileLoggerProvider : ILoggerProvider
         {
             try
             {
-                File.AppendAllText(Path.Combine(_directory, $"filee-{DateTime.Now:yyyyMMdd}.log"), line + Environment.NewLine);
+                File.AppendAllText(Path.Combine(_directory, $"tulez-{DateTime.Now:yyyyMMdd}.log"), line + Environment.NewLine);
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { }
         }

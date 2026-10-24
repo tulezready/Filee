@@ -5,7 +5,7 @@ namespace Filee.Engines.Tests;
 
 public sealed class AppLocalRuntimeTests : IDisposable
 {
-    private readonly string _root = Directory.CreateTempSubdirectory("filee-runtime-").FullName;
+    private readonly string _root = Directory.CreateTempSubdirectory("tulez-runtime-").FullName;
 
     public void Dispose() => Directory.Delete(_root, recursive: true);
 

@@ -8,7 +8,7 @@ namespace Filee.Setup.Tests;
 public class SetupOptionsTests
 {
     [Fact]
-    public void The_updater_of_filee_1_x_gets_the_progress_window_only()
+    public void The_updater_of_tulez_1_x_gets_the_progress_window_only()
     {
         // UpdateService.InstallerArguments in 1.x (and still in 2.0).
         var options = SetupOptions.Parse(["/SILENT", "/NORESTART"]);
@@ -38,15 +38,15 @@ public class SetupOptionsTests
     public void Every_inno_setup_switch_is_understood()
     {
         var options = SetupOptions.Parse([
-            "/silent", "/SuppressMsgBoxes", "/DIR=C:\\Tools\\Filee", "/LANG=zhcn", "/TASKS=cli,desktopicon",
+            "/silent", "/SuppressMsgBoxes", "/DIR=C:\\Tools\\Tulez", "/LANG=zhcn", "/TASKS=cli,desktopicon",
             "/MERGETASKS=!startup", "/NOICONS", "/CURRENTUSER", "/LOG=C:\\logs\\setup.log", "/NOCLOSEAPPLICATIONS",
             "/NORESTART", "/SP-", "/NOCANCEL", "/RESTARTEXITCODE=3", "/CLOSEAPPLICATIONS", "/RESTARTAPPLICATIONS",
             "/NORESTARTAPPLICATIONS", "/NOFORCECLOSEAPPLICATIONS", "/LOGCLOSEAPPLICATIONS", "/COMPONENTS=a", "/TYPE=full",
-            "/GROUP=Filee", "/NOGROUP", "/PASSWORD=x", "/LOADINF=a.inf", "/SAVEINF=b.inf",
+            "/GROUP=Tulez", "/NOGROUP", "/PASSWORD=x", "/LOADINF=a.inf", "/SAVEINF=b.inf",
         ]);
         Assert.Equal(SetupUi.Silent, options.Ui);
         Assert.True(options.SuppressMessageBoxes);
-        Assert.Equal(@"C:\Tools\Filee", options.Directory);
+        Assert.Equal(@"C:\Tools\Tulez", options.Directory);
         Assert.Equal("zhcn", options.Language);
         Assert.Equal("cli,desktopicon", options.Tasks);
         Assert.Equal("!startup", options.MergeTasks);
@@ -72,7 +72,7 @@ public class SetupOptionsTests
     }
 
     [Fact]
-    public void Filee_switches_and_unknown_arguments()
+    public void Tulez_switches_and_unknown_arguments()
     {
         var options = SetupOptions.Parse(["/NOLAUNCH", "/UNINSTALL", "/SANDBOX=D:\\scratch", "/LAUNCHFILE=C:\\t\\x.launch", "/FIRSTPHASE=4242", "--weird", "/WHAT", "file.txt"]);
         Assert.Equal(4242, options.FirstPhase);
@@ -85,9 +85,9 @@ public class SetupOptionsTests
     }
 
     [Theory]
-    [InlineData("/DIR=\"C:\\Program Files\\Filee\"", @"C:\Program Files\Filee")]
-    [InlineData("/DIR=C:\\Program Files\\Filee", @"C:\Program Files\Filee")]
-    [InlineData("/dir=  D:\\Apps\\Filee  ", @"D:\Apps\Filee")]
+    [InlineData("/DIR=\"C:\\Program Files\\Tulez\"", @"C:\Program Files\Tulez")]
+    [InlineData("/DIR=C:\\Program Files\\Tulez", @"C:\Program Files\Tulez")]
+    [InlineData("/dir=  D:\\Apps\\Tulez  ", @"D:\Apps\Tulez")]
     public void Folders_with_or_without_quotes(string arg, string folder) =>
         Assert.Equal(folder, SetupOptions.Parse([arg]).Directory);
 
@@ -102,7 +102,7 @@ public class SetupOptionsTests
 
     [Theory]
     [InlineData("plain")]
-    [InlineData("/DIR=C:\\Program Files\\Filee")]
+    [InlineData("/DIR=C:\\Program Files\\Tulez")]
     [InlineData("C:\\folder with space\\")]
     [InlineData("say \"hi\"")]
     [InlineData("back\\\\slashes\\\"quote")]

@@ -9,7 +9,7 @@ namespace Filee.App.Views.Pages;
 
 public partial class GeneralPage : UserControl
 {
-    private static readonly FilePickerFileType JsonType = new("Filee presets") { Patterns = ["*.json"] };
+    private static readonly FilePickerFileType JsonType = new("Tulez presets") { Patterns = ["*.json"] };
 
     public GeneralPage() => InitializeComponent();
 
@@ -21,7 +21,7 @@ public partial class GeneralPage : UserControl
             return;
         var file = await top.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            SuggestedFileName = "filee-presets.json",
+            SuggestedFileName = "tulez-presets.json",
             DefaultExtension = "json",
             FileTypeChoices = [JsonType],
         });

@@ -5,7 +5,7 @@ import Meta from 'gi://Meta';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-const DONUT_TITLE = 'Filee Donut';
+const DONUT_TITLE = 'Tulez Donut';
 // Filee reads the protocol version from each line and says on its Triggers page when it doesn't match, so the socket
 // name stays the same across versions.
 const PROTOCOL_VERSION = 1;
@@ -25,7 +25,7 @@ export default class FileeDonutExtension extends Extension {
         this._lastState = '';
         this._pointerSource = 0;
         this._placeSource = 0;
-        const directory = GLib.build_filenamev([GLib.get_user_runtime_dir(), 'filee-gnome']);
+        const directory = GLib.build_filenamev([GLib.get_user_runtime_dir(), 'tulez-gnome']);
         GLib.mkdir_with_parents(directory, 0o700);
         this._socketFile = Gio.File.new_for_path(`${directory}/${SOCKET_NAME}`);
         if (this._socketFile.query_exists(null))
@@ -111,9 +111,9 @@ export default class FileeDonutExtension extends Extension {
         // X11/XWayland: WM class. Native Wayland (FILEE_USE_WAYLAND=1): the app id, which Mutter reports as the WM
         // class, or, when Filee sets none, the connected Filee process or the process name.
         return [window.get_wm_class(), window.get_wm_class_instance(), window.get_gtk_application_id()]
-            .some(value => /^(filee|com\.filee\.app)$/i.test(value ?? '')) ||
+            .some(value => /^(tulez|com\.tulez\.app)$/i.test(value ?? '')) ||
             (this._peerPid > 0 && window.get_pid() === this._peerPid) ||
-            /^filee$/i.test(this._processName(window) ?? '');
+            /^tulez$/i.test(this._processName(window) ?? '');
     }
 
     _pointerWindow(x, y) {

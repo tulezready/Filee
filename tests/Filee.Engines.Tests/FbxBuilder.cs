@@ -97,7 +97,7 @@ internal static class FbxBuilder
         {
             new Node("FBXHeaderVersion", 1003),
             new Node("FBXVersion", version),
-            new Node("Creator", "Filee tests"),
+            new Node("Creator", "Tulez tests"),
         },
         new Node("GlobalSettings")
         {
@@ -337,7 +337,7 @@ internal static class FbxBuilder
 
     public static void WriteAscii(string path, IEnumerable<Node> nodes)
     {
-        var text = new StringBuilder("; FBX 7.4.0 project file\n; Written by the Filee tests\n\n");
+        var text = new StringBuilder("; FBX 7.4.0 project file\n; Written by the Tulez tests\n\n");
         foreach (var node in nodes)
             WriteAscii(text, node, 0);
         File.WriteAllText(path, text.ToString());

@@ -39,7 +39,7 @@ public class OtherFileManagerTests
     [Fact]
     public void A_dragged_folder_counts_like_a_file_so_it_can_go_into_an_archive()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-drag-folder-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-drag-folder-").FullName;
         var file = Path.Combine(folder, "1.png");
         File.WriteAllBytes(file, [1]);
         try

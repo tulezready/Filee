@@ -45,7 +45,7 @@ public class BrowserDragTests
     [InlineData("https://example.com/files/Q3%20report.pdf?download=1", "Q3 report.pdf")]
     [InlineData("https://example.com/a/photo.JPG", "photo.JPG")]
     [InlineData("http://example.com/sheet.xlsx", "sheet.xlsx")]
-    public void A_link_to_a_file_Filee_converts_is_a_file(string url, string name) =>
+    public void A_link_to_a_file_Tulez_converts_is_a_file(string url, string name) =>
         Assert.Equal([name], Names(Drag((BrowserDragFormats.MozUrl, url + "\nTitle"))));
 
     [Theory]
@@ -121,7 +121,7 @@ public class BrowserDragTests
     }
 
     [Fact]
-    public void Pixels_only_stand_in_when_the_picture_has_no_address_Filee_can_fetch()
+    public void Pixels_only_stand_in_when_the_picture_has_no_address_Tulez_can_fetch()
     {
         var asked = 0;
         WebDropItem Pixels()

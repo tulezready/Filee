@@ -126,7 +126,7 @@ internal static partial class ICalendar
                     var to = closed.First("TZOFFSETTO")?.Value;
                     var dates = closed.All("DTSTART").Concat(closed.All("RDATE")).SelectMany(p => p.Value.Split(','));
                     if (TryOffset(from, out var oldOffset) && TryOffset(to, out var newOffset))
-                        stack.Peek().Properties.Add(new Property("X-FILEE-OBSERVANCE",
+                        stack.Peek().Properties.Add(new Property("X-TULEZ-OBSERVANCE",
                             $"{string.Join(',', dates)}|{oldOffset:c}|{newOffset:c}|{(closed.First("RRULE") is null ? "0" : "1")}",
                             "", new Dictionary<string, string>()));
                 }
@@ -153,7 +153,7 @@ internal static partial class ICalendar
             return;
         var definition = new ZoneDefinition();
         // Observances are accumulated while reading, without exposing nested properties on the parent.
-        foreach (var entry in component.Properties.Where(p => p.Name == "X-FILEE-OBSERVANCE"))
+        foreach (var entry in component.Properties.Where(p => p.Name == "X-TULEZ-OBSERVANCE"))
         {
             var parts = entry.Value.Split('|');
             if (parts.Length < 3 || !TimeSpan.TryParse(parts[1], CultureInfo.InvariantCulture, out var from)
@@ -437,7 +437,7 @@ internal static partial class ICalendar
         var output = new StringBuilder();
         Line(output, "BEGIN:VCALENDAR");
         Line(output, "VERSION:2.0");
-        Line(output, "PRODID:-//Filee//Filee//EN");
+        Line(output, "PRODID:-//Tulez//Tulez//EN");
         var zones = new Dictionary<string, (TimeZoneInfo Zone, DateTimeOffset Instant, bool HasStart)>(StringComparer.OrdinalIgnoreCase);
         foreach (var component in components)
         {
@@ -472,7 +472,7 @@ internal static partial class ICalendar
                 zone = definition.Zone;
             Line(output, "BEGIN:" + component.Type);
             var uid = cells[13].IndexOfAny(['\r', '\n']) >= 0 || cells[13].Length == 0
-                ? Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\0', cells))))[..16] + "@filee"
+                ? Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\0', cells))))[..16] + "@tulez"
                 : cells[13];
             Line(output, "UID:" + uid);
             Line(output, "DTSTAMP:" + DateTime.UtcNow.ToString("yyyyMMdd'T'HHmmss'Z'", CultureInfo.InvariantCulture));

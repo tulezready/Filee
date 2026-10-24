@@ -8,7 +8,7 @@ let pointer = [500, 400, 0];
 let map;
 let moves = [];
 const window = {
-    get_title: () => 'Filee Donut', get_wm_class: () => 'Filee', get_wm_class_instance: () => 'Filee',
+    get_title: () => 'Tulez Donut', get_wm_class: () => 'Tulez', get_wm_class_instance: () => 'Tulez',
     get_gtk_application_id: () => null, get_frame_rect: () => ({x: 0, y: 0, width: 400, height: 400}),
     get_pid: () => new Gio.Credentials().get_unix_pid(), get_window_type: () => Meta.WindowType.NORMAL,
     showing_on_its_workspace: () => true, make_above() {}, raise() {}, move_frame: (_user, x, y) => moves.push([x, y]),
@@ -27,7 +27,7 @@ const ExtensionClass = new Function('Clutter', 'Gio', 'GLib', 'Meta', 'Extension
     `${source}\nreturn FileeDonutExtension;`)(Clutter, Gio, GLib, Meta, class {}, Main, shell);
 const loop = new GLib.MainLoop(null, false);
 const extension = new ExtensionClass();
-const socketPath = `${GLib.get_user_runtime_dir()}/filee-gnome/pointer.sock`;
+const socketPath = `${GLib.get_user_runtime_dir()}/tulez-gnome/pointer.sock`;
 let connection;
 function settle(ms) {
     return new Promise(resolve => GLib.timeout_add(GLib.PRIORITY_DEFAULT, ms, () => { resolve(); return GLib.SOURCE_REMOVE; }));
@@ -39,7 +39,7 @@ function read(stream) {
 }
 async function run() {
     extension.enable();
-    assert(!extension._pointerSource, 'no pointer polling before Filee connects');
+    assert(!extension._pointerSource, 'no pointer polling before Tulez connects');
     const info = Gio.File.new_for_path(socketPath).query_info('unix::mode', Gio.FileQueryInfoFlags.NONE, null);
     assert((info.get_attribute_uint32('unix::mode') & 0o777) === 0o600, 'socket is private');
     const client = new Gio.SocketClient();
@@ -79,7 +79,7 @@ async function run() {
     connection = null;
     for (let i = 0; i < 20 && extension._pointerSource; i++)
         await settle(100);
-    assert(!extension._pointerSource, 'pointer polling stops when Filee disconnects');
+    assert(!extension._pointerSource, 'pointer polling stops when Tulez disconnects');
     print('PASS: real Gio socket, private permissions, modifiers/buttons, lock screen, fixed placement, screen edges, ' +
         'native Wayland match, polling only while connected');
 }

@@ -14,7 +14,7 @@ namespace Filee.App.Tests;
 [Collection("Motion")]
 public sealed class AnimatedImageTests : IDisposable
 {
-    private readonly string _folder = Directory.CreateTempSubdirectory("filee-animated-").FullName;
+    private readonly string _folder = Directory.CreateTempSubdirectory("tulez-animated-").FullName;
 
     public void Dispose()
     {
@@ -222,7 +222,7 @@ public sealed class AnimatedImageTests : IDisposable
         window.Show();
         Dispatcher.UIThread.RunJobs();
         Assert.False(image.HasPicture);
-        image.Source = new Uri("avares://Filee/Assets/WhatsNew/0.0.0/none.webp");
+        image.Source = new Uri("avares://Tulez/Assets/WhatsNew/0.0.0/none.webp");
         Assert.False(image.HasPicture);
         window.Close();
     }

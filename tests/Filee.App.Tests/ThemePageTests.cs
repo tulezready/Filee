@@ -25,7 +25,7 @@ public class ThemePageTests
     public void Visual_picker_and_swatches_stay_in_sync_and_persist(string language, ThemeMode mode)
     {
         TestServices.EnsureInitialized(language);
-        var directory = Directory.CreateTempSubdirectory("filee-theme-").FullName;
+        var directory = Directory.CreateTempSubdirectory("tulez-theme-").FullName;
         var store = new UserDataStore(directory);
         store.Load();
         store.Settings.Theme.Mode = mode;

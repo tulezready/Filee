@@ -13,7 +13,7 @@ public class PdfBlankPagesTests
     [Fact]
     public void Removes_only_pages_without_any_painting_operation()
     {
-        var path = Path.Combine(Path.GetTempPath(), $"filee-blank-pages-{Guid.NewGuid():N}.pdf");
+        var path = Path.Combine(Path.GetTempPath(), $"tulez-blank-pages-{Guid.NewGuid():N}.pdf");
         try
         {
             using (var document = new PdfDocument())
@@ -44,7 +44,7 @@ public class PdfBlankPagesTests
     [Fact]
     public void Keeps_a_wholly_blank_document()
     {
-        var path = Path.Combine(Path.GetTempPath(), $"filee-blank-document-{Guid.NewGuid():N}.pdf");
+        var path = Path.Combine(Path.GetTempPath(), $"tulez-blank-document-{Guid.NewGuid():N}.pdf");
         try
         {
             using (var document = new PdfDocument())
@@ -67,7 +67,7 @@ public class PdfBlankPagesTests
     [Fact]
     public void Keeps_PdfA_spreadsheet_output_byte_for_byte()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-pdfa-pages-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-pdfa-pages-").FullName;
         var path = Path.Combine(folder, "archive.pdf");
         try
         {

@@ -257,7 +257,7 @@ public class ClipToolTests
     }
 
     [Fact]
-    public void Back_from_an_older_Filee_the_clip_tool_cuts_clips_again_and_keeps_the_users_changes()
+    public void Back_from_an_older_Tulez_the_clip_tool_cuts_clips_again_and_keeps_the_users_changes()
     {
         // A Filee from 26 to 44 reads the unknown "tool" as nothing (a crop) and saves it so.
         var presets = BuiltInData.CreatePresets();

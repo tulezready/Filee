@@ -39,10 +39,10 @@ public class EngineProbeTests
     public void Output_of_a_program_that_exits_is_returned()
     {
         var result = OperatingSystem.IsWindows()
-            ? FfmpegRunner.RunBriefly("cmd.exe", ["/d", "/c", "echo filee-probe"], TimeSpan.FromSeconds(10))
-            : FfmpegRunner.RunBriefly("/bin/sh", ["-c", "echo filee-probe"], TimeSpan.FromSeconds(10));
+            ? FfmpegRunner.RunBriefly("cmd.exe", ["/d", "/c", "echo tulez-probe"], TimeSpan.FromSeconds(10))
+            : FfmpegRunner.RunBriefly("/bin/sh", ["-c", "echo tulez-probe"], TimeSpan.FromSeconds(10));
 
-        Assert.Contains("filee-probe", result.StandardOutput);
+        Assert.Contains("tulez-probe", result.StandardOutput);
         Assert.Equal(0, result.ExitCode);
     }
 }

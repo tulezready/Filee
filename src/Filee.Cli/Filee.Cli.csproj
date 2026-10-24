@@ -1,14 +1,14 @@
 <!--
-  Filee.Cli: the "filee" command line. Converts files and watches folders without the tray app, with the same
-  engines, presets and settings. Published next to Filee.exe as filee-cli.exe (one runtime for both); the installer
-  puts a "filee" shim on PATH (cli\filee.cmd).
+  Filee.Cli: the "tulez" command line. Converts files and watches folders without the tray app, with the same
+  engines, presets and settings. Published next to Tulez.exe as tulez-cli.exe (one runtime for both); the installer
+  puts a "tulez" shim on PATH (cli\tulez.cmd).
 -->
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyName>filee-cli</AssemblyName>
+    <AssemblyName>tulez-cli</AssemblyName>
     <RootNamespace>Filee.Cli</RootNamespace>
-    <ApplicationIcon>..\Filee.App\Assets\Icons\filee.ico</ApplicationIcon>
+    <ApplicationIcon>..\Filee.App\Assets\Icons\tulez.ico</ApplicationIcon>
     <!-- The Recycle Bin is IFileOperation, a COM interface (Filee.Platform.Windows). -->
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>

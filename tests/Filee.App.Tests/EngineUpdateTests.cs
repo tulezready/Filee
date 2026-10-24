@@ -33,7 +33,7 @@ public class EngineUpdateTests
     }
 
     [AvaloniaFact]
-    public void Copies_filee_did_not_download_are_never_offered_an_update()
+    public void Copies_tulez_did_not_download_are_never_offered_an_update()
     {
         TestServices.EnsureInitialized("en");
         var state = Ffmpeg();

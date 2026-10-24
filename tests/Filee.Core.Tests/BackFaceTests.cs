@@ -175,9 +175,9 @@ public class BackFaceTests
     }
 
     [Theory]
-    [InlineData(29)]    // the older Filee also saved its settings, with its own schema
+    [InlineData(29)]    // the older Tulez also saved its settings, with its own schema
     [InlineData(null)]  // it only saved the library: the settings still say 30
-    public void Back_from_an_older_Filee_the_built_in_back_faces_return_and_an_emptied_one_stays_empty(int? schema)
+    public void Back_from_an_older_Tulez_the_built_in_back_faces_return_and_an_emptied_one_stays_empty(int? schema)
     {
         using var dir = new TempDir();
         var store = NewStore(dir);

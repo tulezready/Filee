@@ -20,13 +20,13 @@ namespace Filee.App.Tests;
 public class NativeMemoryRenderTests
 {
     private static TimeSpan Duration =>
-        TimeSpan.FromSeconds(int.TryParse(Environment.GetEnvironmentVariable("FILEE_STRESS_SECONDS"), out var s) && s > 0 ? s : 5);
+        TimeSpan.FromSeconds(int.TryParse(Environment.GetEnvironmentVariable("TULEZ_STRESS_SECONDS"), out var s) && s > 0 ? s : 5);
 
     [AvaloniaFact]
     public async Task Rendering_and_saving_frames_survive_idle_trims_and_compacting_collections()
     {
         TestServices.EnsureInitialized("en");
-        var folder = Directory.CreateTempSubdirectory("filee-native-render-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-native-render-").FullName;
         try
         {
             var pictures = new[] { MagickColors.Coral, MagickColors.Teal }.Select((color, i) =>

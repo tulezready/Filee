@@ -107,7 +107,7 @@ public class BrowserDropTests
 
     private static string UseFolder(UserDataStore store, bool saveOnlyConverted)
     {
-        var folder = Path.Combine(Path.GetTempPath(), "filee-app-tests", "downloads-" + Guid.NewGuid().ToString("N")[..8]);
+        var folder = Path.Combine(Path.GetTempPath(), "tulez-app-tests", "downloads-" + Guid.NewGuid().ToString("N")[..8]);
         Directory.CreateDirectory(folder);
         store.Settings.BrowserDrops.Folder = folder;
         store.Settings.BrowserDrops.SaveOnlyConverted = saveOnlyConverted;
@@ -165,7 +165,7 @@ public class BrowserDropTests
     public void Firefox_temporary_copies_count_as_browser_files_but_files_on_disk_stay_local()
     {
         TestServices.EnsureInitialized("en");
-        var temp = Path.Combine(Path.GetTempPath(), "filee-app-tests", "moz-" + Guid.NewGuid().ToString("N")[..6], "dog.png");
+        var temp = Path.Combine(Path.GetTempPath(), "tulez-app-tests", "moz-" + Guid.NewGuid().ToString("N")[..6], "dog.png");
         Directory.CreateDirectory(Path.GetDirectoryName(temp)!);
         File.WriteAllBytes(temp, Png);
         try

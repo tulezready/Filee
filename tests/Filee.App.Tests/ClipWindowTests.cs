@@ -879,7 +879,7 @@ public class ClipWindowTests
         var theme = AppHost.Get<ThemeService>();
         if (dark)
             theme.Apply(new ThemeSettings { Mode = ThemeMode.Dark }, language);
-        var folder = Directory.CreateTempSubdirectory("filee-clip-window-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-clip-window-").FullName;
         ClipWindow? window = null;
         try
         {

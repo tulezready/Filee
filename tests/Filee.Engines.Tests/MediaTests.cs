@@ -815,7 +815,7 @@ public class MediaTests(EngineFixture fx) : IClassFixture<EngineFixture>
     }
 
     [Fact]
-    public async Task Ffmpeg_reads_the_apng_filee_writes()
+    public async Task Ffmpeg_reads_the_apng_tulez_writes()
     {
         SkipUnlessInstalled();
         var folder = fx.NewFolder();

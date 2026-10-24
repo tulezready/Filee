@@ -181,7 +181,7 @@ public class BrowserDragFormatsTests
     [InlineData("SETUP.EXE ", true)]
     [InlineData("install.msi", true)]
     [InlineData("run.ps1", true)]
-    [InlineData("Filee.dmg", true)]
+    [InlineData("Tulez.dmg", true)]
     [InlineData("app.jar", true)]
     [InlineData("Example.url", true)]
     [InlineData("photo.jpg", false)]

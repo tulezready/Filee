@@ -51,7 +51,7 @@ public class ExplorerMenuTests
         Assert.Equal("10.0.22000.0", (string?)manifest.Descendants(F + "TargetDeviceFamily").Single().Attribute("MinVersion"));
 
         var app = manifest.Descendants(F + "Application").Single();
-        Assert.Equal("Filee.exe", (string?)app.Attribute("Executable"));
+        Assert.Equal("Tulez.exe", (string?)app.Attribute("Executable"));
         Assert.Equal("mediumIL", (string?)app.Attribute(Uap10 + "TrustLevel"));
         Assert.Equal("win32App", (string?)app.Attribute(Uap10 + "RuntimeBehavior"));
         Assert.Equal("none", (string?)app.Element(Uap + "VisualElements")!.Attribute("AppListEntry"));
@@ -80,7 +80,7 @@ public class ExplorerMenuTests
         Assert.Equal(ExplorerMenuPackage.ClassId, fromSource);
 
         Assert.Contains($"#define LIST_PREFIX L\"{CommandLine.ListFilePrefix}\"", source);
-        Assert.Contains($"#define TITLE_FILE L\"Filee\\\\{ExplorerMenuPackage.TitleFileName}\"", source);
+        Assert.Contains($"#define TITLE_FILE L\"Tulez\\\\{ExplorerMenuPackage.TitleFileName}\"", source);
     }
 
     [Fact]
@@ -114,7 +114,7 @@ public class ExplorerMenuTests
     public void Reading_the_registered_package_never_throws()
     {
         Assert.SkipUnless(OperatingSystem.IsWindowsVersionAtLeast(10), "Package APIs need Windows.");
-        Assert.Null(ExplorerMenuRegistration.ExternalLocationOf("Filee.NotInstalled_1.0.0.0_x64__0000000000000"));
+        Assert.Null(ExplorerMenuRegistration.ExternalLocationOf("Tulez.NotInstalled_1.0.0.0_x64__0000000000000"));
         // Whatever is registered on this machine (nothing on CI): a registered sparse package has an external location.
         if (ExplorerMenuRegistration.Find() is { } package)
             Assert.False(string.IsNullOrEmpty(package.ExternalLocation), package.FullName);
@@ -124,21 +124,21 @@ public class ExplorerMenuTests
     [Fact]
     public void PowerShell_literals_escape_straight_and_typographic_single_quotes()
     {
-        Assert.Equal(@"'C:\Users\Kim''s PC\Filee'", ExplorerMenuRegistration.Quote(@"C:\Users\Kim's PC\Filee"));
+        Assert.Equal(@"'C:\Users\Kim''s PC\Tulez'", ExplorerMenuRegistration.Quote(@"C:\Users\Kim's PC\Tulez"));
         Assert.Equal("'Kim\u2019\u2019s'", ExplorerMenuRegistration.Quote("Kim\u2019s"));
     }
 
     [Fact]
     public void Add_script_registers_the_package_unsigned_with_the_install_folder_as_external_location()
     {
-        var script = ExplorerMenuRegistration.BuildAddScript(@"C:\Apps\Filee\current\FileeExplorerMenu.msix",
-            @"C:\Apps\Filee\current", @"C:\Temp\err.txt");
-        Assert.Contains(@"Add-AppxPackage -Path 'C:\Apps\Filee\current\FileeExplorerMenu.msix' -ExternalLocation 'C:\Apps\Filee\current' -AllowUnsigned", script);
+        var script = ExplorerMenuRegistration.BuildAddScript(@"C:\Apps\Tulez\current\FileeExplorerMenu.msix",
+            @"C:\Apps\Tulez\current", @"C:\Temp\err.txt");
+        Assert.Contains(@"Add-AppxPackage -Path 'C:\Apps\Tulez\current\FileeExplorerMenu.msix' -ExternalLocation 'C:\Apps\Tulez\current' -AllowUnsigned", script);
         Assert.Contains(@"[IO.File]::WriteAllText('C:\Temp\err.txt', $_.Exception.Message); exit 1", script);
         Assert.DoesNotContain("\"", script);
 
         var remove = ExplorerMenuRegistration.BuildRemoveScript(@"C:\Temp\err.txt");
-        Assert.Contains("Get-AppxPackage -Name 'Filee.ExplorerMenu' | Remove-AppxPackage", remove);
+        Assert.Contains("Get-AppxPackage -Name 'Tulez.ExplorerMenu' | Remove-AppxPackage", remove);
     }
 
     [Fact]
@@ -170,7 +170,7 @@ public class ExplorerMenuTests
     [Fact]
     public void Convert_list_reads_existing_paths_and_only_deletes_its_own_temp_file()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-list-test-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-list-test-").FullName;
         var list = Path.Combine(Path.GetTempPath(), CommandLine.ListFilePrefix + Guid.NewGuid().ToString("N") + ".txt");
         var foreign = Path.Combine(folder, CommandLine.ListFilePrefix + "elsewhere.txt");
         try
@@ -226,13 +226,13 @@ public class ExplorerMenuTests
         using var command = NativeCommand.Create(dll);
         // The title comes from the file the app writes into its data folder; without it the English default is used.
         var expectedTitle = ExplorerMenuRegistration.ReadTitle();
-        Assert.Equal(expectedTitle ?? "Convert with Filee", command.GetTitle());
-        Assert.Equal(Path.Combine(BuiltFolder, "Filee.exe") + ",0", command.GetIcon(), ignoreCase: true);
+        Assert.Equal(expectedTitle ?? "Convert with Tulez", command.GetTitle());
+        Assert.Equal(Path.Combine(BuiltFolder, "Tulez.exe") + ",0", command.GetIcon(), ignoreCase: true);
         Assert.Equal(ExplorerMenuPackage.ClassId, command.GetCanonicalName());
 
         const int enabled = 0, hidden = 2;
         var file = Path.GetTempFileName();
-        var folder = Directory.CreateTempSubdirectory("filee-menu-test-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-menu-test-").FullName;
         try
         {
             Assert.Equal(expectedTitle is null ? hidden : enabled, command.GetState(file));

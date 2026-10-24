@@ -31,13 +31,13 @@ public sealed class Uninstaller(SetupContext context)
         IProgress<SetupProgress>? progress = null, Action? releaseUninstaller = null)
     {
         folder = Path.TrimEndingDirectorySeparator(Path.GetFullPath(folder));
-        Log.Info($"Uninstalling Filee {record.Version} from {folder} ({record.Scope}); delete settings: {deleteSettings}");
+        Log.Info($"Uninstalling Tulez {record.Version} from {folder} ({record.Scope}); delete settings: {deleteSettings}");
         var later = new List<string>();
         progress?.Report(new SetupProgress(SetupStep.Closing, 0));
 
         var exe = Path.Combine(folder, SetupNames.AppExe);
         if (File.Exists(exe))
-            Log.Info($"Filee --uninstall-cleanup: exit code {System.RunAndWait(exe, "--uninstall-cleanup", CleanupTimeout)}");
+            Log.Info($"Tulez --uninstall-cleanup: exit code {System.RunAndWait(exe, "--uninstall-cleanup", CleanupTimeout)}");
         foreach (var program in System.ProgramsIn(folder).Where(p => p.Id != Environment.ProcessId))
         {
             // Not the uninstaller that started this one: it waits for this one and ends by itself.
@@ -56,7 +56,7 @@ public sealed class Uninstaller(SetupContext context)
         if (PathVariable.Set(Registry, record.Scope, Path.Combine(folder, SetupNames.CliFolder), present: false))
         {
             System.BroadcastEnvironmentChange();
-            Log.Info("Removed the filee command from PATH");
+            Log.Info("Removed the tulez command from PATH");
         }
 
         progress?.Report(new SetupProgress(SetupStep.Removing, 0.5));

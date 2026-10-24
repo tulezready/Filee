@@ -11,9 +11,9 @@
   2. checks out the tag in a worktree and runs its build-installer.ps1 with -CertificateThumbprint, which signs the
      unsigned programs and the Setup program, packs Setup.exe, signs it, zips the portable copy and writes the
      SHA-256 sums;
-  3. installs the signed Setup into a sandbox (nothing on the PC is touched) and checks that Filee.exe and
+  3. installs the signed Setup into a sandbox (nothing on the PC is touched) and checks that Tulez.exe and
      uninstall.exe come out signed, then uninstalls it;
-  4. uploads Filee-<version>-win-Setup.exe, the portable zip and Filee-<version>-SHA256SUMS.txt to the draft, and
+  4. uploads Tulez-<version>-win-Setup.exe, the portable zip and Tulez-<version>-SHA256SUMS.txt to the draft, and
      with -Publish publishes the release.
 
   Needs gh (signed in), git and the .NET SDK. Output: build/.cache/release-<version>/out.
@@ -27,13 +27,13 @@ param(
     [Parameter(Mandatory)]
     [string]$Version,
     # Defaults to $env:FILEE_SIGNING_CERT (see sign-windows.ps1).
-    [string]$CertificateThumbprint = $env:FILEE_SIGNING_CERT,
+    [string]$CertificateThumbprint = $env:TULEZ_SIGNING_CERT,
     [switch]$Publish
 )
 
 $ErrorActionPreference = 'Stop'
 if (-not $IsWindows) { throw 'Windows releases are signed on Windows.' }
-if (-not $CertificateThumbprint) { throw 'Pass -CertificateThumbprint or set FILEE_SIGNING_CERT.' }
+if (-not $CertificateThumbprint) { throw 'Pass -CertificateThumbprint or set TULEZ_SIGNING_CERT.' }
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $Version = $Version.TrimStart('v')
 $tag = "v$Version"
@@ -71,8 +71,8 @@ finally {
     git -C $root worktree remove --force $source
 }
 
-$setup = Join-Path $out "Filee-$Version-win-Setup.exe"
-$files = @($setup, (Join-Path $out "Filee-$Version-win-Portable.zip"), (Join-Path $out "Filee-$Version-SHA256SUMS.txt"))
+$setup = Join-Path $out "Tulez-$Version-win-Setup.exe"
+$files = @($setup, (Join-Path $out "Tulez-$Version-win-Portable.zip"), (Join-Path $out "Tulez-$Version-SHA256SUMS.txt"))
 foreach ($file in $files) { if (-not (Test-Path $file)) { throw "$file was not written." } }
 
 # The signed Setup still finds its payload, and what it installs is signed, the uninstaller too.
@@ -83,8 +83,8 @@ function Invoke-Setup([string]$exe) {
 }
 Write-Host 'install the signed Setup into a sandbox'
 Invoke-Setup $setup
-$installed = Join-Path $sandbox 'Program Files\Filee'
-foreach ($file in 'Filee.exe', 'filee-cli.exe', 'uninstall.exe', 'engines\rhwp\rhwp.exe') {
+$installed = Join-Path $sandbox 'Program Files\Tulez'
+foreach ($file in 'Tulez.exe', 'tulez-cli.exe', 'uninstall.exe', 'engines\rhwp\rhwp.exe') {
     $signature = Get-AuthenticodeSignature (Join-Path $installed $file)
     if ($signature.Status -ne 'Valid') { throw "$file is not signed after installing ($($signature.Status))." }
 }

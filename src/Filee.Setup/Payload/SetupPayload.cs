@@ -24,7 +24,7 @@ namespace Filee.Setup.Payload;
 
 public sealed class SetupPayload : IDisposable
 {
-    public const string Magic = "FILEE-PAYLOAD-01";
+    public const string Magic = "TULEZ-PAYLOAD-01";
     public const int TrailerLength = 16 + 8 + 8 + 8 + 32;
     private const int BufferSize = 1 << 20;
 

@@ -1067,7 +1067,7 @@ public sealed class JobQueue : IAsyncDisposable
             return Kept(new Platform.TrashRefusal("trash.no_recycle_bin"), output);
 
         var staged = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(source))!,
-            $".{Path.GetFileName(source)}.{Guid.NewGuid().ToString("N")[..8]}.filee-tmp");
+            $".{Path.GetFileName(source)}.{Guid.NewGuid().ToString("N")[..8]}.tulez-tmp");
         try
         {
             File.Move(output, staged);
@@ -1202,7 +1202,7 @@ public sealed class JobQueue : IAsyncDisposable
     }
 
     /// <summary>Where every job has its work folder, named by the job's <see cref="ConversionJob.Id"/>.</summary>
-    public static string DefaultWorkRoot => Path.Combine(Path.GetTempPath(), "Filee");
+    public static string DefaultWorkRoot => Path.Combine(Path.GetTempPath(), "Tulez");
 
     /// <summary>
     /// Deletes the work folders of jobs a crash, a forced quit or a power cut kept from removing them: intermediate

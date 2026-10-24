@@ -72,7 +72,7 @@ public class CustomThemeTests
         var log = new ListLogger();
 
         Assert.Null(CustomTheme.Load(dir.Path, log));
-        Assert.Contains(log.Messages, m => m.Contains("sets no colours Filee can use"));
+        Assert.Contains(log.Messages, m => m.Contains("sets no colours Tulez can use"));
     }
 
     [Fact]

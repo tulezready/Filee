@@ -28,7 +28,7 @@ public sealed class LinuxPlatformServices : IPlatformServices
     // Enabling the Shell extension opts in; no /dev/input permission or environment setup is needed on GNOME.
     // Keep KDE's existing libinput opt-in independent. A value of 0 explicitly disables the GNOME bridge too.
     public static bool UsesGnomePointerBridge => IsGnomeWaylandSession
-        && Environment.GetEnvironmentVariable("FILEE_WAYLAND_GESTURES") != "0";
+        && Environment.GetEnvironmentVariable("TULEZ_WAYLAND_GESTURES") != "0";
 
     public string? GnomePointerProcess { get; set; }
     public bool GnomePointerIsDesktop { get; set; }
@@ -38,7 +38,7 @@ public sealed class LinuxPlatformServices : IPlatformServices
     // and it works once the user is in the `input` group. Presses carry no position and a mouse only moves
     // relatively there; a KWin script or Hyprland window rule places the donut at the cursor.
     private static readonly bool WaylandGestures = IsWaylandSession
-        && Environment.GetEnvironmentVariable("FILEE_WAYLAND_GESTURES") == "1"
+        && Environment.GetEnvironmentVariable("TULEZ_WAYLAND_GESTURES") == "1"
         && WaylandSupport.IsSupportedCompositor(
             Environment.GetEnvironmentVariable("XDG_CURRENT_DESKTOP"),
             Environment.GetEnvironmentVariable("HYPRLAND_INSTANCE_SIGNATURE"))
@@ -62,12 +62,12 @@ public sealed class LinuxPlatformServices : IPlatformServices
     public bool PressCarriesPosition => !WaylandGestures;
     public bool SupportsSelectionShortcut => false;
     public string SelectionShortcutUnavailableReason =>
-        "Linux file managers do not expose a shared selected-file API. Use the Filee context action or its Thunar shortcut.";
+        "Linux file managers do not expose a shared selected-file API. Use the Tulez context action or its Thunar shortcut.";
     public string? GlobalPointerGesturesUnavailableReason => SupportsGlobalPointerGestures ? null : IsWaylandSession
         ? "The cursor-following gesture requires an X11 desktop session. File actions and the drop zone remain available on Wayland."
         : "The cursor-following gesture requires an X11 display.";
     public string ThunarShortcutRestartRequired =>
-        "Close Thunar before changing its shortcut, then reopen it to load the Filee action and shortcut.";
+        "Close Thunar before changing its shortcut, then reopen it to load the Tulez action and shortcut.";
 
     // Wayland can't say which window is under the cursor, so any Ctrl+drag may open the (invisible) donut window;
     // it only shows when files are dragged in, and excluded apps can't be told apart there either.

@@ -15,7 +15,7 @@ internal sealed class GeneratedWatchOutputs(WatchRule rule)
 
     private readonly Dictionary<string, Entry> _entries = new(FileSystemPaths.Comparer);
     private readonly HashSet<string> _directories = new(FileSystemPaths.Comparer);
-    private string StateFile => System.IO.Path.Combine(rule.Folder, ".filee-watch-" +
+    private string StateFile => System.IO.Path.Combine(rule.Folder, ".tulez-watch-" +
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(rule.Id)))[..16].ToLowerInvariant() + ".json");
 
     public void Load()

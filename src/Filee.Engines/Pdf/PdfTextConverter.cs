@@ -100,5 +100,5 @@ public sealed class PdfTextConverter : IConverter
     }
 
     private static InvalidOperationException NoText() =>
-        new("The PDF contains no text (it may be scanned; Filee does not recognise text in images).");
+        new("The PDF contains no text (it may be scanned; Tulez does not recognise text in images).");
 }

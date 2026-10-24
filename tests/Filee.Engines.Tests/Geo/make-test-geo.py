@@ -1,7 +1,7 @@
 """Writes the Shapefile test fixtures in this folder with GDAL (through Fiona).
 
 Why they exist: GeoShapefileTests and GeoFormatTests read Shapefiles that an independent implementation wrote, so a
-mistake in Filee's own reader can't cancel out against the same mistake in Filee's own writer. The data is synthetic
+mistake in Tulez's own reader can't cancel out against the same mistake in Tulez's own writer. The data is synthetic
 (a few points, polygons and lines made up for the tests): no third-party data, nothing to license. GDAL itself is not
 shipped. Everything else the tests need (GeoJSON, KML, GPX, CSV and the damaged or unusual Shapefiles) is written in
 the tests, see GeoBuilders.cs.

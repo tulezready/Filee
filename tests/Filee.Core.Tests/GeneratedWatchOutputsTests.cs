@@ -18,7 +18,7 @@ public class GeneratedWatchOutputsTests
         Assert.False(results.Remember(dir.Path)); // the entire inbox must never become an ignored result tree
         results.Save();
         if (OperatingSystem.IsWindows())
-            Assert.True(File.GetAttributes(Assert.Single(Directory.GetFiles(dir.Path, ".filee-watch-*.json"))).HasFlag(FileAttributes.Hidden));
+            Assert.True(File.GetAttributes(Assert.Single(Directory.GetFiles(dir.Path, ".tulez-watch-*.json"))).HasFlag(FileAttributes.Hidden));
 
         var reopened = new GeneratedWatchOutputs(rule);
         reopened.Load();
@@ -39,7 +39,7 @@ public class GeneratedWatchOutputsTests
         Assert.False(results.Remember(outside.File("elsewhere.png")));
         Assert.False(results.Remember(Path.Combine(dir.Path, "missing.png")));
         results.Save();
-        var state = Assert.Single(Directory.GetFiles(dir.Path, ".filee-watch-*.json"));
+        var state = Assert.Single(Directory.GetFiles(dir.Path, ".tulez-watch-*.json"));
         File.SetAttributes(state, FileAttributes.Normal); // simulate editing the otherwise hidden state file
         File.WriteAllText(state, "[null, {\"Path\":null}]");
         results.Load();

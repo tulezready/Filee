@@ -223,7 +223,7 @@ internal static class LivePhotoWriter
         {
             foreach (var (source, target) in files)
             {
-                var stage = Path.Combine(Path.GetDirectoryName(target)!, $".filee-{Guid.NewGuid():N}{Path.GetExtension(target)}");
+                var stage = Path.Combine(Path.GetDirectoryName(target)!, $".tulez-{Guid.NewGuid():N}{Path.GetExtension(target)}");
                 staged.Add((stage, target));
                 File.Move(source, stage);
             }

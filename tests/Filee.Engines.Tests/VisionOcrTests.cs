@@ -39,7 +39,7 @@ public class VisionLanguageTests
     }
 
     [Fact]
-    public void Every_mapped_language_is_one_filee_offers()
+    public void Every_mapped_language_is_one_tulez_offers()
     {
         foreach (var code in new[] { "eng", "deu", "fra", "spa", "por", "ita", "nld", "pol", "ces", "ron", "swe", "dan", "nor", "tur",
                      "ind", "msa", "rus", "ukr", "ara", "tha", "vie", "kor", "jpn", "chi_sim", "chi_tra" })
@@ -52,7 +52,7 @@ public class OcrTextLayerTests(EngineFixture fx) : IClassFixture<EngineFixture>
     [Fact]
     public void Words_are_found_at_spaces_and_spread_over_the_line_when_they_have_no_boxes()
     {
-        Assert.Equal([(0, 5), (7, 5), (13, 1)], OcrLine.WordRanges("Filee  reads\tA "));
+        Assert.Equal([(0, 5), (7, 5), (13, 1)], OcrLine.WordRanges("Tulez  reads\tA "));
         var line = OcrLine.Estimate("ab cd", 0.1, 0.5, 0.5, 0.1);
         Assert.Equal(["ab", "cd"], line.Words.Select(w => w.Text));
         Assert.Equal(0.1, line.Words[0].Left, 6);
@@ -341,14 +341,14 @@ public class AppleVisionTests(EngineFixture fx) : IClassFixture<EngineFixture>
         Assert.True(vision.IsAvailable);
         Assert.Contains("en-US", vision.Languages);
         Assert.Contains("ko-KR", vision.Languages);
-        var scan = Scan(fx.NewFolder(), "letter.png", Helvetica, "Filee reads scanned pages", "into searchable documents");
+        var scan = Scan(fx.NewFolder(), "letter.png", Helvetica, "Tulez reads scanned pages", "into searchable documents");
 
         var lines = vision.Recognize(scan, ["en-US"], TestContext.Current.CancellationToken);
 
         Assert.Equal(2, lines.Count);
-        var first = lines.Single(l => l.Words.Any(w => w.Text == "Filee"));
+        var first = lines.Single(l => l.Words.Any(w => w.Text == "Tulez"));
         var second = lines.Single(l => l != first);
-        Assert.Equal(["Filee", "reads", "scanned", "pages"], first.Words.Select(w => w.Text));
+        Assert.Equal(["Tulez", "reads", "scanned", "pages"], first.Words.Select(w => w.Text));
         Assert.True(first.Bottom > second.Bottom); // measured from the bottom of the picture
         foreach (var line in lines)
         {
@@ -369,7 +369,7 @@ public class AppleVisionTests(EngineFixture fx) : IClassFixture<EngineFixture>
     {
         Assert.SkipUnless(OperatingSystem.IsMacOS(), Skip);
         var folder = fx.NewFolder();
-        var picture = Scan(folder, "편지.png", Helvetica, "Filee reads scanned pages");
+        var picture = Scan(folder, "편지.png", Helvetica, "Tulez reads scanned pages");
         var scanPdf = (await fx.ConvertAsync([Scan(folder, "Скан.png", Helvetica, "The quarterly report is ready")], new Preset { TargetFormat = "pdf" })).Outputs.Single();
 
         var job = await fx.ConvertAsync([picture, scanPdf], new Preset { TargetFormat = "pdf", Pdf = { Ocr = true } });
@@ -403,7 +403,7 @@ public class AppleVisionTests(EngineFixture fx) : IClassFixture<EngineFixture>
 /// <summary>Stand-ins for Apple Vision and Tesseract.</summary>
 internal static class VisionFakes
 {
-    public const string Text = "Filee reads scanned pages";
+    public const string Text = "Tulez reads scanned pages";
 
     /// <summary>A grey picture of the given size and resolution.</summary>
     public static string Picture(string folder, string name, uint width, uint height, int dpi = 300)

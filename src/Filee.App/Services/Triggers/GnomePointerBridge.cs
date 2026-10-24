@@ -19,7 +19,7 @@ internal sealed class GnomePointerBridge(Action<GnomePointerState> received, Act
     // The name has no version in it: every line carries one, so a Shell still running an older or newer extension
     // is reported as a mismatch instead of looking like a missing extension.
     public static string? SocketPath => Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR") is { } directory
-        && Path.IsPathFullyQualified(directory) ? Path.Combine(directory, "filee-gnome", "pointer.sock") : null;
+        && Path.IsPathFullyQualified(directory) ? Path.Combine(directory, "tulez-gnome", "pointer.sock") : null;
 
     private async Task ReadAsync(string path)
     {

@@ -15,7 +15,7 @@ public class SpreadsheetPrintStudioTests
     public void Multiple_workbooks_keep_independent_studio_windows()
     {
         TestServices.EnsureInitialized();
-        var folder = Directory.CreateTempSubdirectory("filee-studios-test-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-studios-test-").FullName;
         var windows = AppHost.Get<WindowService>();
         var before = windows.SpreadsheetStudios.ToArray();
         try
@@ -51,7 +51,7 @@ public class SpreadsheetPrintStudioTests
         TestServices.EnsureInitialized();
         var service = AppHost.Get<SpreadsheetPrintService>();
         Assert.SkipUnless(service.Status.IsAvailable, "LibreOffice not found");
-        var folder = Directory.CreateTempSubdirectory("filee-sheet-studio-test-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-sheet-studio-test-").FullName;
         try
         {
             var source = Path.Combine(folder, "large.xlsx");
@@ -68,7 +68,7 @@ public class SpreadsheetPrintStudioTests
             await export;
             await WaitUntilAsync(() => !WorkFolders().Except(before).Any(), TimeSpan.FromSeconds(10));
 
-            Assert.False(File.Exists(output + ".filee-tmp"));
+            Assert.False(File.Exists(output + ".tulez-tmp"));
             Assert.Empty(WorkFolders().Except(before));
         }
         finally

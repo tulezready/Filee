@@ -62,7 +62,7 @@ public class RadialControllerTests
     [Fact]
     public void Folders_only_go_into_one_archive()
     {
-        var folder = Directory.CreateTempSubdirectory("filee-donut-folder-").FullName;
+        var folder = Directory.CreateTempSubdirectory("tulez-donut-folder-").FullName;
         try
         {
             var file = Path.Combine(folder, "1.png");

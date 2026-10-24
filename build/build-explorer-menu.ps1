@@ -8,7 +8,7 @@
   on GitHub's windows-latest runner. The unsigned sparse package is packed by build/tools/make-explorer-package.cs
   through the packaging API that ships with Windows.
 
-  Both files belong next to Filee.exe; the release workflow passes the publish folder as -Destination.
+  Both files belong next to Tulez.exe; the release workflow passes the publish folder as -Destination.
 
 .EXAMPLE
   pwsh build/build-explorer-menu.ps1
@@ -92,7 +92,7 @@ New-Item -ItemType Directory -Force -Path $obj, $Destination | Out-Null
 
 # The version resource gets the numbers through a generated header-like prefix (zig's resource compiler has no -D).
 $rc = Join-Path $obj 'FileeExplorerMenu.rc'
-$defines = "#define FILEE_VERSION_MAJOR $major`r`n#define FILEE_VERSION_MINOR $minor`r`n#define FILEE_VERSION_PATCH $patch`r`n#define FILEE_VERSION_TEXT `"$Version`"`r`n"
+$defines = "#define TULEZ_VERSION_MAJOR $major`r`n#define TULEZ_VERSION_MINOR $minor`r`n#define TULEZ_VERSION_PATCH $patch`r`n#define TULEZ_VERSION_TEXT `"$Version`"`r`n"
 Set-Content -Path $rc -Value ($defines + (Get-Content (Join-Path $source 'FileeExplorerMenu.rc') -Raw)) -Encoding utf8NoBOM -NoNewline
 
 Write-Host "build FileeExplorerMenu.dll $Version"

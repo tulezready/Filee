@@ -21,15 +21,15 @@ var output = Path.GetFullPath(args[0]);
 Directory.CreateDirectory(output);
 var repo = Environment.CurrentDirectory;
 while (!File.Exists(Path.Combine(repo, "Filee.slnx")))
-    repo = Path.GetDirectoryName(repo) ?? throw new InvalidOperationException("Run this from inside the Filee repository.");
+    repo = Path.GetDirectoryName(repo) ?? throw new InvalidOperationException("Run this from inside the Tulez repository.");
 
-var work = Directory.CreateTempSubdirectory("filee-msix-");
+var work = Directory.CreateTempSubdirectory("tulez-msix-");
 try
 {
     var manifestPath = Path.Combine(work.FullName, "AppxManifest.xml");
     File.WriteAllText(manifestPath, ExplorerMenuPackage.CreateManifest(), new UTF8Encoding(false));
     var packagePath = Path.Combine(output, ExplorerMenuPackage.PackageFileName);
-    var logo = Path.Combine(repo, "src", "Filee.App", "Assets", "Icons", "filee.png");
+    var logo = Path.Combine(repo, "src", "Filee.App", "Assets", "Icons", "tulez.png");
     Appx.Pack(packagePath, manifestPath, [(ExplorerMenuPackage.LogoPath, logo, "image/png")]);
     Console.WriteLine($"Wrote {packagePath} ({new FileInfo(packagePath).Length:N0} bytes, manifest {ExplorerMenuPackage.ManifestVersion})");
 }
