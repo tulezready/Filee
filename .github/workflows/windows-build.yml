@@ -1,0 +1,43 @@
+# Builds the unsigned Windows installer and portable zip and keeps them as a downloadable artifact.
+# Same packaging as release.yml (build/build-installer.ps1), without the tests, signing or a GitHub release.
+# Run it from the Actions tab (Windows build > Run workflow).
+name: Windows build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      # The app embeds the Noto fonts.
+      - name: Fonts
+        shell: pwsh
+        run: ./build/fetch-fonts.ps1
+
+      - name: Restore Zig toolchain
+        uses: actions/cache/restore@v5
+        with:
+          path: build/.cache/zig-x86_64-windows-0.16.0
+          key: zig-0.16.0-x86_64-windows
+
+      - name: Build installer and portable zip
+        shell: pwsh
+        run: ./build/build-installer.ps1 -Portable
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: filee-windows
+          path: Releases/
+          if-no-files-found: error
+          retention-days: 30
